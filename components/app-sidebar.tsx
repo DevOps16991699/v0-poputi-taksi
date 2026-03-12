@@ -1,8 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { User, Car, X, ChevronRight, Users, Bell, Moon, Globe, Shield, Smartphone, HelpCircle, LogOut } from "lucide-react"
-import { PoputiLogo } from "@/components/poputi-logo"
+import { User, Car, ChevronRight, Users, Bell, Moon, Globe, Shield, Smartphone, HelpCircle, LogOut } from "lucide-react"
 import Link from "next/link"
 import { useRole } from "@/contexts/role-context"
 
@@ -145,13 +144,8 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         </div>
 
         {/* Footer - Sticky at bottom */}
-        <div className="flex-shrink-0 p-4">
-          <div className="p-4 rounded-2xl bg-linear-to-br from-primary/10 to-accent/50 border border-primary/20">
-            <div className="flex items-center justify-center">
-              <PoputiLogo size="sm" />
-            </div>
-            <p className="text-xs text-muted-foreground text-center mt-2">v1.0 - Hamkorlik taksi</p>
-          </div>
+        <div className="flex-shrink-0 px-4 pb-4">
+          <p className="text-xs text-muted-foreground text-center">v1.0</p>
         </div>
       </div>
     </>
