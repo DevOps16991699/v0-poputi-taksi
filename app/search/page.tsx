@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
+import Link from "next/link"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -622,69 +623,61 @@ interface Ride {
 }
 
 function RideCard({ ride }: { ride: Ride }) {
-  const [showContact, setShowContact] = useState(false)
-
   return (
-    <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50">
-      {/* Route */}
-      <div className="flex items-center gap-3 mb-3">
-        <div className="flex flex-col items-center">
-          <div className="w-3 h-3 rounded-full bg-emerald-500" />
-          <div className="w-0.5 h-8 bg-border" />
-          <div className="w-3 h-3 rounded-full bg-primary" />
-        </div>
-        <div className="flex-1">
-          <p className="font-semibold text-foreground">{ride.from}</p>
-          <div className="h-4" />
-          <p className="font-semibold text-foreground">{ride.to}</p>
-        </div>
-        <div className="text-right">
-          <p className="text-lg font-bold text-primary">{ride.price.toLocaleString()}</p>
-          <p className="text-xs text-muted-foreground">so'm</p>
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="flex items-center gap-4 py-3 border-t border-border">
-        <div className="flex items-center gap-1.5 text-muted-foreground">
-          <Clock className="w-4 h-4" />
-          <span className="text-sm">{ride.date}, {ride.time}</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-muted-foreground">
-          <Users className="w-4 h-4" />
-          <span className="text-sm">{ride.seats} joy</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-muted-foreground">
-          <Car className="w-4 h-4" />
-          <span className="text-sm">{ride.car}</span>
-        </div>
-      </div>
-
-      {/* Driver & Action */}
-      <div className="flex items-center justify-between pt-3 border-t border-border">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold text-primary">
-              {ride.driver.charAt(0)}
-            </span>
+    <Link href={`/ride/${ride.id}`} className="block">
+      <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50 hover:border-primary/50 transition-colors">
+        {/* Route */}
+        <div className="flex items-center gap-3 mb-3">
+          <div className="flex flex-col items-center">
+            <div className="w-3 h-3 rounded-full bg-emerald-500" />
+            <div className="w-0.5 h-8 bg-border" />
+            <div className="w-3 h-3 rounded-full bg-primary" />
           </div>
-          <span className="text-sm font-medium text-foreground">{ride.driver}</span>
+          <div className="flex-1">
+            <p className="font-semibold text-foreground">{ride.from}</p>
+            <div className="h-4" />
+            <p className="font-semibold text-foreground">{ride.to}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-lg font-bold text-primary">{ride.price.toLocaleString()}</p>
+            <p className="text-xs text-muted-foreground">so'm</p>
+          </div>
         </div>
-        <Button
-          size="sm"
-          onClick={() => setShowContact(!showContact)}
-          className="rounded-xl bg-primary hover:bg-primary/90"
-        >
-          {showContact ? (
-            <span className="flex items-center gap-1">
-              <Phone className="w-4 h-4" />
-              {ride.phone.slice(0, 12)}...
-            </span>
-          ) : (
-            "Band qilish"
-          )}
-        </Button>
+
+        {/* Info */}
+        <div className="flex items-center gap-4 py-3 border-t border-border">
+          <div className="flex items-center gap-1.5 text-muted-foreground">
+            <Clock className="w-4 h-4" />
+            <span className="text-sm">{ride.date}, {ride.time}</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-muted-foreground">
+            <Users className="w-4 h-4" />
+            <span className="text-sm">{ride.seats} joy</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-muted-foreground">
+            <Car className="w-4 h-4" />
+            <span className="text-sm">{ride.car}</span>
+          </div>
+        </div>
+
+        {/* Driver & Action */}
+        <div className="flex items-center justify-between pt-3 border-t border-border">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-sm font-semibold text-primary">
+                {ride.driver.charAt(0)}
+              </span>
+            </div>
+            <span className="text-sm font-medium text-foreground">{ride.driver}</span>
+          </div>
+          <Button
+            size="sm"
+            className="rounded-xl bg-emerald-500 hover:bg-emerald-500/90"
+          >
+            Batafsil
+          </Button>
+        </div>
       </div>
-    </div>
+    </Link>
   )
 }

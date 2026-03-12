@@ -42,3 +42,9 @@
 - [x] Vaqt bo'yicha filter yo'q - **BAJARILDI**
 - [x] Saqlangan qidiruvlar yo'q - **BAJARILDI**
 - [x] Xarita ko'rinishi yo'q - **BAJARILDI**
+
+#### 3.2 Safar Tafsilotlari
+- [x] Safar detallari sahifasi yo'q (/ride/[id]) - **BAJARILDI**
+- [x] Haydovchi profili va reytingini ko'rish yo'q - **BAJARILDI**
+- [x] Mashina haqida to'liq ma'lumot yo'q - **BAJARILDI**
+- [x] Yo'l xaritasi ko'rsatilmaydi - **BAJARILDI**
