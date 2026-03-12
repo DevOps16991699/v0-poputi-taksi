@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,7 +11,9 @@ import {
   MapPin,
   Search,
   Plus,
-  Ticket
+  Ticket,
+  Star,
+  ArrowRight
 } from "lucide-react"
 import { PoputiLogo, PoputiLogoIcon } from "@/components/poputi-logo"
 import Link from "next/link"
@@ -180,31 +183,33 @@ export default function HomePage() {
         {/* Main Content */}
         <div className="flex-1 px-6 pb-6">
 
-          {/* Quick Action Card */}
-          <Link href={isDriver ? "/driver" : "/search"} className="block mb-6">
-            <div className={`bg-background rounded-2xl p-4 shadow-lg border border-border/50 flex items-center gap-3 transition-colors ${
-              isDriver ? "hover:border-primary/50" : "hover:border-emerald-500/50"
-            }`}>
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                isDriver ? "bg-primary/10" : "bg-emerald-500/10"
-              }`}>
-                {isDriver ? (
-                  <Plus className={`w-5 h-5 ${isDriver ? "text-primary" : "text-emerald-500"}`} />
-                ) : (
-                  <Search className="w-5 h-5 text-emerald-500" />
-                )}
+          {/* Quick Action Card - Driver Only */}
+          {isDriver ? (
+            <Link href="/driver" className="block mb-6">
+              <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50 flex items-center gap-3 transition-colors hover:border-primary/50">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-primary/10">
+                  <Plus className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-foreground">Yangi e'lon joylash</p>
+                  <p className="text-xs text-muted-foreground">Safar ma'lumotlarini kiriting</p>
+                </div>
+                <MapPin className="w-5 h-5 text-muted-foreground" />
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">
-                  {isDriver ? "Yangi e'lon joylash" : "Safar qidirish"}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {isDriver ? "Safar ma'lumotlarini kiriting" : "Qayerdan - Qayerga?"}
-                </p>
+            </Link>
+          ) : (
+            /* Passenger - Horizontal Scrolling Rides Announcements */
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base font-semibold text-foreground">Mavjud safarlar</h3>
+                <Link href="/search" className="text-xs text-emerald-600 font-medium flex items-center gap-1">
+                  Barchasini ko'rish
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
-              <MapPin className="w-5 h-5 text-muted-foreground" />
+              <RidesMarquee rides={availableRides} />
             </div>
-          </Link>
+          )}
 
           {/* Statistics */}
           <div className="mb-6">
@@ -253,6 +258,133 @@ function StatCard({ label, value, icon: Icon, gradient, shadow }: StatCardProps)
       </div>
       <p className="text-xl font-bold text-foreground">{value}</p>
       <p className="text-xs text-muted-foreground">{label}</p>
+    </div>
+  )
+}
+
+// Rides Marquee Component
+interface RideAnnouncement {
+  id: number
+  driver: string
+  from: string
+  to: string
+  time: string
+  date: string
+  price: string
+  seats: number
+  car: string
+  rating: number
+}
+
+function RidesMarquee({ rides }: { rides: RideAnnouncement[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+    
+    let animationId: number
+    let scrollPosition = 0
+    const scrollSpeed = 0.5
+    
+    const animate = () => {
+      scrollPosition += scrollSpeed
+      
+      // Reset position when first set of items is scrolled out
+      const firstSetWidth = scrollContainer.scrollWidth / 2
+      if (scrollPosition >= firstSetWidth) {
+        scrollPosition = 0
+      }
+      
+      scrollContainer.scrollLeft = scrollPosition
+      animationId = requestAnimationFrame(animate)
+    }
+    
+    animationId = requestAnimationFrame(animate)
+    
+    // Pause on hover
+    const handleMouseEnter = () => cancelAnimationFrame(animationId)
+    const handleMouseLeave = () => {
+      animationId = requestAnimationFrame(animate)
+    }
+    
+    scrollContainer.addEventListener("mouseenter", handleMouseEnter)
+    scrollContainer.addEventListener("mouseleave", handleMouseLeave)
+    
+    return () => {
+      cancelAnimationFrame(animationId)
+      scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
+      scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+    }
+  }, [])
+  
+  // Duplicate rides for seamless loop
+  const duplicatedRides = [...rides, ...rides]
+  
+  return (
+    <div 
+      ref={scrollRef}
+      className="flex gap-3 overflow-hidden"
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+    >
+      {duplicatedRides.map((ride, index) => (
+        <Link 
+          key={`${ride.id}-${index}`} 
+          href={`/search?from=${ride.from}&to=${ride.to}`}
+          className="shrink-0"
+        >
+          <div className="w-64 bg-background rounded-2xl p-4 shadow-lg border border-border/50 hover:border-emerald-500/50 transition-all hover:shadow-xl">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                  <span className="text-sm font-semibold text-emerald-600">
+                    {ride.driver.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{ride.driver}</p>
+                  <div className="flex items-center gap-1">
+                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                    <span className="text-xs text-muted-foreground">{ride.rating}</span>
+                  </div>
+                </div>
+              </div>
+              <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-600 font-medium">
+                {ride.date}
+              </span>
+            </div>
+            
+            {/* Route */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex flex-col items-center">
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                <div className="w-0.5 h-4 bg-border" />
+                <div className="w-2 h-2 rounded-full bg-primary" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground">{ride.from}</p>
+                <p className="text-sm text-muted-foreground">{ride.to}</p>
+              </div>
+            </div>
+            
+            {/* Footer */}
+            <div className="flex items-center justify-between pt-2 border-t border-border/50">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {ride.time}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Users className="w-3 h-3" />
+                  {ride.seats} o'rin
+                </span>
+              </div>
+              <p className="text-sm font-bold text-emerald-600">{ride.price}</p>
+            </div>
+          </div>
+        </Link>
+      ))}
     </div>
   )
 }
