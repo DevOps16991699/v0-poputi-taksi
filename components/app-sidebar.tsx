@@ -56,16 +56,13 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         )}
       >
         {/* Sidebar Header */}
-        <div className="pt-6 px-6 pb-5 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
+        <div className="pt-5 px-5 pb-4 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
           {/* User Info with Close Button */}
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-4 ring-primary-foreground/30">
-              <User className="w-7 h-7 text-primary-foreground" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-2 ring-primary-foreground/30">
+              <User className="w-5 h-5 text-primary-foreground" />
             </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-primary-foreground">Jamshid Karimov</h3>
-              <p className="text-sm text-primary-foreground/70">+998 90 123 45 67</p>
-            </div>
+            <p className="flex-1 text-sm font-semibold text-primary-foreground truncate">Jamshid Karimov</p>
             <button
               onClick={onClose}
               className="w-8 h-8 flex items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/70 hover:bg-primary-foreground/20 hover:text-primary-foreground transition-all"
