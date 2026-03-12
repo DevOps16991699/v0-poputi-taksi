@@ -332,7 +332,7 @@ function RidesMarquee({ rides }: { rides: RideAnnouncement[] }) {
       {duplicatedRides.map((ride, index) => (
         <Link 
           key={`${ride.id}-${index}`} 
-          href={`/search?from=${ride.from}&to=${ride.to}`}
+          href={`/ride/${ride.id}`}
           className="shrink-0"
         >
           <div className="w-64 bg-background rounded-2xl p-4 shadow-lg border border-border/50 hover:border-emerald-500/50 transition-all hover:shadow-xl">

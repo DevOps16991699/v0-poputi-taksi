@@ -1,6 +1,7 @@
 "use client"
 
 import { use } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
@@ -212,6 +213,7 @@ const defaultRide = {
 }
 
 export default function RideDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const router = useRouter()
   const { id } = use(params)
   const ride = ridesData[id] || defaultRide
 
@@ -220,9 +222,9 @@ export default function RideDetailsPage({ params }: { params: Promise<{ id: stri
       <MobileLayout showSidebarToggle={false} showNavigation={false}>
         <div className="flex flex-col min-h-full bg-background">
           <header className="flex items-center gap-3 px-4 py-3 border-b border-border/50">
-            <Link href="/search" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
+            <button onClick={() => router.back()} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
               <ArrowLeft className="w-5 h-5" />
-            </Link>
+            </button>
             <h1 className="text-lg font-semibold">Safar topilmadi</h1>
           </header>
           <div className="flex-1 flex items-center justify-center p-6">
@@ -245,9 +247,9 @@ export default function RideDetailsPage({ params }: { params: Promise<{ id: stri
         {/* Header */}
         <header className="flex items-center justify-between px-4 py-3 border-b border-border/50">
           <div className="flex items-center gap-3">
-            <Link href="/search" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
+            <button onClick={() => router.back()} className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
               <ArrowLeft className="w-5 h-5" />
-            </Link>
+            </button>
             <h1 className="text-lg font-semibold">Safar tafsilotlari</h1>
           </div>
           <div className="flex items-center gap-2">

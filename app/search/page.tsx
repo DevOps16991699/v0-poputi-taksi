@@ -21,7 +21,8 @@ import {
   BookmarkCheck,
   Map,
   List,
-  Trash2
+  Trash2,
+  PersonStanding
 } from "lucide-react"
 
 const allRides = [
@@ -250,15 +251,24 @@ export default function SearchPage() {
                 placeholder="Qayerdan?"
                 value={searchFrom}
                 onChange={(e) => setSearchFrom(e.target.value)}
-                className="pl-12 h-12 rounded-xl border-border bg-muted/50"
+                className="pl-12 pr-12 h-12 rounded-xl border-border bg-muted/50"
               />
-              {searchFrom && (
+              {searchFrom ? (
                 <button
                   onClick={() => setSearchFrom("")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-muted flex items-center justify-center"
                 >
                   <X className="w-3.5 h-3.5 text-muted-foreground" />
                 </button>
+              ) : (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-emerald-500/30 rounded-full animate-ping" />
+                    <div className="relative w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center animate-bounce">
+                      <PersonStanding className="w-3.5 h-3.5 text-emerald-600" />
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
 
@@ -271,15 +281,24 @@ export default function SearchPage() {
                 placeholder="Qayerga?"
                 value={searchTo}
                 onChange={(e) => setSearchTo(e.target.value)}
-                className="pl-12 h-12 rounded-xl border-border bg-muted/50"
+                className="pl-12 pr-12 h-12 rounded-xl border-border bg-muted/50"
               />
-              {searchTo && (
+              {searchTo ? (
                 <button
                   onClick={() => setSearchTo("")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-muted flex items-center justify-center"
                 >
                   <X className="w-3.5 h-3.5 text-muted-foreground" />
                 </button>
+              ) : (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-primary/30 rounded-full animate-ping" style={{ animationDelay: "0.5s" }} />
+                    <div className="relative w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center animate-bounce" style={{ animationDelay: "0.3s" }}>
+                      <PersonStanding className="w-3.5 h-3.5 text-primary" />
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
 
