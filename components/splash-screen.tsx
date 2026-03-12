@@ -20,10 +20,11 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
       setTimeout(() => setStep(3), 4000),
       setTimeout(() => setStep(4), 6000),
       setTimeout(() => setStep(5), 8000),
+      setTimeout(() => setStep(6), 10000),
       setTimeout(() => {
         setIsExiting(true)
         setTimeout(onComplete, 500)
-      }, 10000),
+      }, 12000),
     ]
 
     return () => timers.forEach(clearTimeout)
@@ -357,11 +358,87 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
             
             <p className="text-white/70 text-xs mt-2">Safar davom etmoqda...</p>
           </div>
+
+          {/* Step 6: Manzilga yetib keldingiz */}
+          <div className={cn(
+            "absolute inset-0 flex flex-col items-center justify-center p-4 transition-all duration-700",
+            step === 6 ? "opacity-100" : "opacity-0 pointer-events-none"
+          )}>
+            {/* Manzil belgisi */}
+            <div 
+              className="relative mb-4"
+              style={{ animation: "pulse 1.5s ease-in-out infinite" }}
+            >
+              <svg viewBox="0 0 60 80" className="w-16 h-20" style={{ filter: "drop-shadow(0 0 20px rgba(16,185,129,0.6))" }}>
+                <path d="M30 5 C16 5 5 16 5 30 C5 50 30 75 30 75 C30 75 55 50 55 30 C55 16 44 5 30 5 Z" 
+                  fill="url(#arrivalGrad)" stroke="rgba(255,255,255,0.5)" strokeWidth="2"/>
+                <defs>
+                  <linearGradient id="arrivalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#10b981"/>
+                    <stop offset="100%" stopColor="#059669"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="30" cy="28" r="10" fill="rgba(255,255,255,0.9)"/>
+                <path d="M26 28 L29 31 L35 25" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            
+            {/* Ikki odam quchoqlashib */}
+            <div className="flex items-end gap-2 mb-3">
+              {/* Haydovchi */}
+              <svg viewBox="0 0 50 100" className="w-10 h-20" style={{ filter: "drop-shadow(0 0 15px rgba(59,130,246,0.6))" }}>
+                <circle cx="25" cy="15" r="11" fill="rgba(59,130,246,0.9)"/>
+                <path d="M16 30 L34 30 L32 58 L18 58 Z" fill="rgba(59,130,246,0.9)"/>
+                <path d="M18 58 L16 90 L23 90 L25 63 L27 90 L34 90 L32 58" fill="rgba(59,130,246,0.9)"/>
+                <path d="M34 35 L48 45 L45 48 L32 40" fill="rgba(59,130,246,0.9)"/>
+              </svg>
+              
+              {/* Yo'lovchi */}
+              <svg viewBox="0 0 50 100" className="w-10 h-20" style={{ filter: "drop-shadow(0 0 15px rgba(16,185,129,0.6))" }}>
+                <circle cx="25" cy="15" r="11" fill="rgba(16,185,129,0.9)"/>
+                <path d="M16 30 L34 30 L32 58 L18 58 Z" fill="rgba(16,185,129,0.9)"/>
+                <path d="M18 58 L16 90 L23 90 L25 63 L27 90 L34 90 L32 58" fill="rgba(16,185,129,0.9)"/>
+                <path d="M16 35 L2 45 L5 48 L18 40" fill="rgba(16,185,129,0.9)"/>
+              </svg>
+            </div>
+            
+            {/* Tabriklov yozuvi */}
+            <div 
+              className="px-5 py-2.5 rounded-full flex items-center gap-2"
+              style={{ 
+                background: "linear-gradient(135deg, #10b981, #059669)",
+                boxShadow: "0 0 30px rgba(16,185,129,0.6), 0 4px 15px rgba(0,0,0,0.3)"
+              }}
+            >
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span className="text-white text-sm font-bold">Manzilga yetib keldingiz!</span>
+            </div>
+            
+            {/* Yulduzchalar */}
+            <div className="flex gap-1 mt-3">
+              {[...Array(5)].map((_, i) => (
+                <svg 
+                  key={i} 
+                  className="w-4 h-4" 
+                  fill="#fbbf24" 
+                  viewBox="0 0 20 20"
+                  style={{ 
+                    animation: "pulse 1s ease-in-out infinite",
+                    animationDelay: `${i * 0.1}s`
+                  }}
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Progress dots */}
         <div className="flex items-center gap-2 mt-4">
-          {[1, 2, 3, 4, 5].map((i) => (
+          {[1, 2, 3, 4, 5, 6].map((i) => (
             <div
               key={i}
               className={cn(
