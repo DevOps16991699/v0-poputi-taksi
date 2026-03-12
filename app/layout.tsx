@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { RoleProvider } from '@/contexts/role-context'
+import { NativeProvider } from '@/components/native-provider'
+import { SplashProvider } from '@/components/splash-provider'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -58,9 +60,13 @@ export default function RootLayout({
   return (
     <html lang="uz" className="h-full">
       <body className="font-sans antialiased h-full overflow-hidden">
-        <RoleProvider>
-          {children}
-        </RoleProvider>
+        <NativeProvider>
+          <SplashProvider>
+            <RoleProvider>
+              {children}
+            </RoleProvider>
+          </SplashProvider>
+        </NativeProvider>
         <Analytics />
       </body>
     </html>

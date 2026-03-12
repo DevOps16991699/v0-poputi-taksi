@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Home, Search, User, Plus, MapPin, Car, MessageCircle, ChevronRight } from "lucide-react"
+import { Home, Search, User, Plus, MapPin, Car, MessageCircle, Ticket } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -26,14 +26,14 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
   ]
   
   const driverRightNavItems = [
-    { href: "/tickets", icon: MapPin, label: "Safarlar" },
+    { href: "/driver/trips", icon: Ticket, label: "Safarlar" },
     { href: "/profile", icon: User, label: "Profil" },
   ]
 
   // Yo'lovchi uchun navigatsiya
   const passengerLeftNavItems = [
     { href: "/", icon: Home, label: "Asosiy" },
-    { href: "/search", icon: Search, label: "Qidirish" },
+    { href: "/passenger/trips", icon: Ticket, label: "Safarlar" },
   ]
   
   const passengerRightNavItems = [
@@ -44,6 +44,7 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
   const leftNavItems = role === "driver" ? driverLeftNavItems : passengerLeftNavItems
   const rightNavItems = role === "driver" ? driverRightNavItems : passengerRightNavItems
   const centerHref = role === "driver" ? "/driver" : "/search"
+  const CenterIcon = role === "driver" ? Plus : Search
 
   return (
     <div className="min-h-[100dvh] max-h-[100dvh] bg-background flex flex-col overflow-hidden">
@@ -109,17 +110,17 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
               )
             })}
 
-            {/* Center Add Button */}
+            {/* Center Action Button */}
             <Link
               href={centerHref}
               className={cn(
                 "flex items-center justify-center w-14 h-14 -mt-8 rounded-full shadow-lg active:scale-95 transition-transform",
                 role === "driver" 
                   ? "bg-primary shadow-primary/40" 
-                  : "bg-emerald-500 shadow-emerald-500/40"
+                  : "bg-emerald-500 shadow-emerald-500/40 ring-4 ring-emerald-500/20"
               )}
             >
-              <Plus className="h-7 w-7 text-white" />
+              <CenterIcon className="h-7 w-7 text-white" />
             </Link>
 
             {/* Right Nav Items */}
