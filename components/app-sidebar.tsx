@@ -1,10 +1,9 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { User, Car, Settings, X, ChevronRight, MapPin, History, Search, Plus, Ticket, Users } from "lucide-react"
+import { User, Car, X, ChevronRight, Users, Bell, Moon, Globe, Shield, Smartphone, HelpCircle, LogOut } from "lucide-react"
 import { PoputiLogo } from "@/components/poputi-logo"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useRole } from "@/contexts/role-context"
 
 interface AppSidebarProps {
@@ -12,28 +11,32 @@ interface AppSidebarProps {
   onClose: () => void
 }
 
+const settingsMenuItems = [
+  {
+    title: "Ilova",
+    items: [
+      { icon: Bell, label: "Bildirishnomalar", description: "Push xabarnomalari", href: "#" },
+      { icon: Moon, label: "Ko'rinish", description: "Yorug' / Qorong'i rejim", href: "#" },
+      { icon: Globe, label: "Til", description: "O'zbek", href: "#" },
+    ],
+  },
+  {
+    title: "Hisob",
+    items: [
+      { icon: Shield, label: "Maxfiylik", description: "Ma'lumotlar xavfsizligi", href: "#" },
+      { icon: Smartphone, label: "Qurilmalar", description: "Ulangan qurilmalar", href: "#" },
+    ],
+  },
+  {
+    title: "Qo'llab-quvvatlash",
+    items: [
+      { icon: HelpCircle, label: "Yordam", description: "Ko'p so'raladigan savollar", href: "#" },
+    ],
+  },
+]
+
 export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
-  const pathname = usePathname()
   const { role } = useRole()
-
-  // Haydovchi uchun menyu
-  const driverMenuItems = [
-    { href: "/profile", icon: User, label: "Profil" },
-    { href: "/driver", icon: Plus, label: "E'lon joylash" },
-    { href: "/tickets", icon: Ticket, label: "Mening e'lonlarim" },
-    { href: "/settings", icon: Settings, label: "Sozlamalar" },
-  ]
-
-  // Yo'lovchi uchun menyu
-  const passengerMenuItems = [
-    { href: "/profile", icon: User, label: "Profil" },
-    { href: "/search", icon: Search, label: "Safar qidirish" },
-    { href: "/rides", icon: MapPin, label: "Safarlar" },
-    { href: "/my-rides", icon: History, label: "Band qilganlarim" },
-    { href: "/settings", icon: Settings, label: "Sozlamalar" },
-  ]
-
-  const menuItems = role === "driver" ? driverMenuItems : passengerMenuItems
 
   return (
     <>
@@ -85,84 +88,49 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto scrollbar-none">          {/* Profile Tab - Separate Style */}
-          <div className="px-4 pt-4">
-            <Link
-              href="/profile"
-              onClick={onClose}
-              className={cn(
-                "flex items-center gap-4 px-4 py-4 rounded-2xl transition-all group border-2",
-                pathname === "/profile"
-                  ? "bg-primary/10 border-primary text-foreground"
-                  : "border-transparent bg-muted hover:bg-muted/80"
-              )}
-            >
-              <div className={cn(
-                "w-12 h-12 rounded-xl flex items-center justify-center",
-                pathname === "/profile"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-primary/10"
-              )}>
-                <User className={cn(
-                  "w-6 h-6",
-                  pathname === "/profile" ? "text-primary-foreground" : "text-primary"
-                )} />
-              </div>
-              <div className="flex-1">
-                <span className="font-semibold block">Profil</span>
-                <span className="text-xs text-muted-foreground">Shaxsiy ma'lumotlar</span>
-              </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </Link>
-          </div>
-
-          {/* Menu Items */}
-          <nav className="p-4">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3 px-4">
-              Asosiy menyu
-            </p>
-            <div className="space-y-1">
-              {menuItems.slice(1).map((item) => {
-                const isActive = pathname === item.href
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={onClose}
-                    className={cn(
-                      "flex items-center gap-4 px-4 py-3 rounded-xl transition-all group",
-                      isActive
-                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
-                        : "text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <div
+        <div className="flex-1 overflow-y-auto scrollbar-none">
+          {/* Settings Menu Groups */}
+          <div className="p-4 space-y-5">
+            {settingsMenuItems.map((group) => (
+              <div key={group.title}>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-1">
+                  {group.title}
+                </p>
+                <div className="bg-muted/50 rounded-2xl overflow-hidden">
+                  {group.items.map((item, index) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={onClose}
                       className={cn(
-                        "w-9 h-9 rounded-lg flex items-center justify-center transition-colors",
-                        isActive
-                          ? "bg-primary-foreground/20"
-                          : "bg-muted group-hover:bg-primary/10"
+                        "flex items-center gap-3 px-4 py-3 hover:bg-muted transition-colors",
+                        index !== group.items.length - 1 && "border-b border-border/50"
                       )}
                     >
-                      <item.icon
-                        className={cn(
-                          "w-5 h-5",
-                          isActive ? "text-primary-foreground" : "text-primary"
-                        )}
-                      />
-                    </div>
-                    <span className="font-medium flex-1">{item.label}</span>
-                    <ChevronRight
-                      className={cn(
-                        "w-5 h-5 transition-colors",
-                        isActive ? "text-primary-foreground/70" : "text-muted-foreground"
-                      )}
-                    />
-                  </Link>
-                )
-              })}
-            </div>
-          </nav>
+                      <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <item.icon className="w-4.5 h-4.5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-foreground text-sm">{item.label}</p>
+                        <p className="text-xs text-muted-foreground truncate">{item.description}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Logout Button */}
+          <div className="px-4 pb-4">
+            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl bg-destructive/10 hover:bg-destructive/20 transition-colors text-destructive">
+              <div className="w-9 h-9 rounded-xl bg-destructive/10 flex items-center justify-center">
+                <LogOut className="w-4.5 h-4.5" />
+              </div>
+              <span className="font-medium text-sm">Chiqish</span>
+            </button>
+          </div>
         </div>
 
         {/* Footer - Sticky at bottom */}
