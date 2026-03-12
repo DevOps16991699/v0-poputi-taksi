@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { 
   ArrowLeft,
   Send,
-  Image as ImageIcon,
   Paperclip,
   MoreVertical,
   Check,
@@ -16,7 +15,9 @@ import {
   Trash2,
   Copy,
   X,
-  Loader2
+  Loader2,
+  Search,
+  Mic
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -325,58 +326,53 @@ export default function ChatConversationPage() {
         </div>
 
         {/* Input */}
-        <div className="border-t border-border/50 px-4 py-3 bg-background">
-          <div className="flex items-end gap-2">
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              className="hidden"
-              onChange={handleImageUpload}
-            />
+        <div className="px-3 py-2 bg-background">
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleImageUpload}
+          />
+          
+          <div className="flex items-center gap-2 bg-muted rounded-full px-4 py-2">
+            <Search className="w-5 h-5 text-muted-foreground shrink-0" />
             
-            <Button
-              variant="ghost"
-              size="icon"
-              className="shrink-0"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <ImageIcon className="w-5 h-5 text-muted-foreground" />
-            </Button>
-            
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
+              type="button"
               className="shrink-0"
               onClick={() => fileInputRef.current?.click()}
             >
               <Paperclip className="w-5 h-5 text-muted-foreground" />
-            </Button>
+            </button>
             
-            <div className="flex-1 relative">
-              <textarea
-                placeholder="Xabar yozing..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyDown={handleKeyPress}
-                rows={1}
-                className="w-full px-4 py-2.5 bg-muted rounded-2xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 max-h-32"
-                style={{ minHeight: "42px" }}
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="Xabar yozing..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+              className="flex-1 bg-transparent text-sm focus:outline-none placeholder:text-muted-foreground"
+            />
             
-            <Button
-              size="icon"
-              className={`shrink-0 rounded-full ${primaryColor} hover:opacity-90`}
-              onClick={handleSendMessage}
-              disabled={!newMessage.trim() || isSending}
-            >
-              {isSending ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Send className="w-5 h-5" />
-              )}
-            </Button>
+            {newMessage.trim() ? (
+              <button
+                type="button"
+                onClick={handleSendMessage}
+                disabled={isSending}
+                className={`shrink-0 ${primaryColorText}`}
+              >
+                {isSending ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+              </button>
+            ) : (
+              <button type="button" className="shrink-0">
+                <Mic className="w-5 h-5 text-muted-foreground" />
+              </button>
+            )}
           </div>
         </div>
       </div>
