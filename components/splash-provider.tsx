@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, createContext, useContext, useCallback } from "react"
+import { useState, useEffect, createContext, useContext, useCallback, useRef } from "react"
 import { usePathname } from "next/navigation"
 import { SplashScreen } from "./splash-screen"
 
@@ -29,8 +29,8 @@ interface SplashProviderProps {
 // Asosiy sahifalar - bu sahifalarda faolsizlik reklamasi ko'rsatilmaydi
 const MAIN_PAGES = ["/", "/login", "/signup"]
 
-// Faolsizlik vaqti (30 soniya)
-const IDLE_TIMEOUT = 30 * 1000
+// Faolsizlik vaqti (60 soniya)
+const IDLE_TIMEOUT = 60 * 1000
 
 export function SplashProvider({ children }: SplashProviderProps) {
   const pathname = usePathname()
@@ -38,7 +38,7 @@ export function SplashProvider({ children }: SplashProviderProps) {
   const [mounted, setMounted] = useState(false)
   const [showInitialSplash, setShowInitialSplash] = useState(false)
   const [adEnabled, setAdEnabledState] = useState(true)
-  const [idleTimer, setIdleTimer] = useState<NodeJS.Timeout | null>(null)
+  const idleTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   // Ad sozlamasini localStorage dan yuklash
   useEffect(() => {
@@ -67,74 +67,60 @@ export function SplashProvider({ children }: SplashProviderProps) {
 
   // Reklamani hozir ko'rsatish
   const showAdNow = useCallback(() => {
-    if (adEnabled) {
-      setShowSplash(true)
-    }
-  }, [adEnabled])
+    setShowSplash(true)
+  }, [])
 
-  // Faolsizlik detekti
-  const resetIdleTimer = useCallback(() => {
-    if (idleTimer) {
-      clearTimeout(idleTimer)
-    }
-    
-    // Agar ad o'chirilgan yoki asosiy sahifada bo'lsa, timer qo'ymaymiz
-    if (!adEnabled || MAIN_PAGES.includes(pathname)) {
-      return
-    }
-    
-    const timer = setTimeout(() => {
-      // Foydalanuvchi 30 soniya faolsiz bo'lsa, reklama ko'rsatamiz
-      setShowSplash(true)
-    }, IDLE_TIMEOUT)
-    
-    setIdleTimer(timer)
-  }, [adEnabled, pathname, idleTimer])
-
-  // Faolsizlik hodisalarini kuzatish
+  // Sahifa o'zgarganda idle timer ni tozalash
   useEffect(() => {
-    if (!mounted || !adEnabled || MAIN_PAGES.includes(pathname)) {
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current)
+      idleTimerRef.current = null
+    }
+  }, [pathname])
+
+  // Faolsizlik detekti - alohida effect
+  useEffect(() => {
+    if (!mounted || !adEnabled || MAIN_PAGES.includes(pathname) || showSplash) {
       return
     }
 
-    const events = ["mousedown", "mousemove", "keydown", "scroll", "touchstart", "click"]
-    
+    const startIdleTimer = () => {
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current)
+      }
+      
+      idleTimerRef.current = setTimeout(() => {
+        setShowSplash(true)
+      }, IDLE_TIMEOUT)
+    }
+
     const handleActivity = () => {
-      resetIdleTimer()
+      startIdleTimer()
     }
     
-    // Event listener qo'shish
+    const events = ["mousedown", "keydown", "scroll", "touchstart"]
+    
     events.forEach(event => {
       window.addEventListener(event, handleActivity, { passive: true })
     })
     
     // Dastlabki timer
-    resetIdleTimer()
+    startIdleTimer()
     
     return () => {
       events.forEach(event => {
         window.removeEventListener(event, handleActivity)
       })
-      if (idleTimer) {
-        clearTimeout(idleTimer)
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current)
       }
     }
-  }, [mounted, adEnabled, pathname, resetIdleTimer])
-
-  // Sahifa o'zgarganda timer ni reset qilish
-  useEffect(() => {
-    if (idleTimer) {
-      clearTimeout(idleTimer)
-      setIdleTimer(null)
-    }
-  }, [pathname])
+  }, [mounted, adEnabled, pathname, showSplash])
 
   const handleSplashComplete = () => {
     setShowSplash(false)
     setShowInitialSplash(false)
     localStorage.setItem("poputi_splash_seen", Date.now().toString())
-    // Reklama tugagandan so'ng yangi idle timer boshlash
-    resetIdleTimer()
   }
 
   return (
