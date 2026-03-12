@@ -1,10 +1,11 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { User, Car, Settings, X, ChevronRight, MapPin, History } from "lucide-react"
+import { User, Car, Settings, X, ChevronRight, MapPin, History, Search, Plus, Ticket, Users } from "lucide-react"
 import { PoputiLogo } from "@/components/poputi-logo"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useRole } from "@/contexts/role-context"
 
 interface AppSidebarProps {
   isOpen: boolean
@@ -13,14 +14,26 @@ interface AppSidebarProps {
 
 export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
   const pathname = usePathname()
+  const { role } = useRole()
 
-  const menuItems = [
+  // Haydovchi uchun menyu
+  const driverMenuItems = [
     { href: "/profile", icon: User, label: "Profil" },
-    { href: "/rides", icon: MapPin, label: "Safarlar" },
-    { href: "/my-rides", icon: History, label: "Mening safarlarim" },
-    { href: "/driver", icon: Car, label: "Haydovchi bo'limi" },
+    { href: "/driver", icon: Plus, label: "E'lon joylash" },
+    { href: "/tickets", icon: Ticket, label: "Mening e'lonlarim" },
     { href: "/settings", icon: Settings, label: "Sozlamalar" },
   ]
+
+  // Yo'lovchi uchun menyu
+  const passengerMenuItems = [
+    { href: "/profile", icon: User, label: "Profil" },
+    { href: "/search", icon: Search, label: "Safar qidirish" },
+    { href: "/rides", icon: MapPin, label: "Safarlar" },
+    { href: "/my-rides", icon: History, label: "Band qilganlarim" },
+    { href: "/settings", icon: Settings, label: "Sozlamalar" },
+  ]
+
+  const menuItems = role === "driver" ? driverMenuItems : passengerMenuItems
 
   return (
     <>
@@ -56,7 +69,17 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-primary-foreground">Jamshid Karimov</h3>
-              <p className="text-sm text-primary-foreground/70">+998 90 123 45 67</p>
+              <div className="flex items-center gap-2 mt-1">
+                <span className={cn(
+                  "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium",
+                  role === "driver" 
+                    ? "bg-primary-foreground/20 text-primary-foreground" 
+                    : "bg-emerald-500/80 text-white"
+                )}>
+                  {role === "driver" ? <Car className="w-3 h-3" /> : <Users className="w-3 h-3" />}
+                  {role === "driver" ? "Haydovchi" : "Yo'lovchi"}
+                </span>
+              </div>
             </div>
           </div>
         </div>

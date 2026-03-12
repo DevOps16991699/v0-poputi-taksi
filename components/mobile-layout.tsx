@@ -1,9 +1,10 @@
 "use client"
 
-import { Home, Search, User, Plus, MapPin } from "lucide-react"
+import { Home, Search, User, Plus, MapPin, Car } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { useRole } from "@/contexts/role-context"
 
 interface MobileLayoutProps {
   children: React.ReactNode
@@ -14,16 +15,33 @@ interface MobileLayoutProps {
 
 export function MobileLayout({ children, showNavigation = true, lockScroll = false, sidebar }: MobileLayoutProps) {
   const pathname = usePathname()
+  const { role } = useRole()
 
-  const leftNavItems = [
+  // Haydovchi uchun navigatsiya
+  const driverLeftNavItems = [
+    { href: "/", icon: Home, label: "Asosiy" },
+    { href: "/driver", icon: Car, label: "E'lon" },
+  ]
+  
+  const driverRightNavItems = [
+    { href: "/tickets", icon: MapPin, label: "Safarlar" },
+    { href: "/profile", icon: User, label: "Profil" },
+  ]
+
+  // Yo'lovchi uchun navigatsiya
+  const passengerLeftNavItems = [
     { href: "/", icon: Home, label: "Asosiy" },
     { href: "/search", icon: Search, label: "Qidirish" },
   ]
   
-  const rightNavItems = [
+  const passengerRightNavItems = [
     { href: "/rides", icon: MapPin, label: "Safarlar" },
     { href: "/profile", icon: User, label: "Profil" },
   ]
+
+  const leftNavItems = role === "driver" ? driverLeftNavItems : passengerLeftNavItems
+  const rightNavItems = role === "driver" ? driverRightNavItems : passengerRightNavItems
+  const centerHref = role === "driver" ? "/driver" : "/rides"
 
   return (
     <div className="min-h-screen bg-muted flex items-center justify-center p-4">
@@ -72,10 +90,15 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
 
               {/* Center Add Button */}
               <Link
-                href="/driver"
-                className="flex items-center justify-center w-14 h-14 -mt-6 rounded-full bg-primary shadow-lg shadow-primary/40 hover:scale-105 transition-transform"
+                href={centerHref}
+                className={cn(
+                  "flex items-center justify-center w-14 h-14 -mt-6 rounded-full shadow-lg hover:scale-105 transition-transform",
+                  role === "driver" 
+                    ? "bg-primary shadow-primary/40" 
+                    : "bg-emerald-500 shadow-emerald-500/40"
+                )}
               >
-                <Plus className="h-7 w-7 text-primary-foreground" />
+                <Plus className="h-7 w-7 text-white" />
               </Link>
 
               {/* Right Nav Items */}

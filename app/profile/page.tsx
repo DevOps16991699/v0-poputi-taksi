@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,42 +16,58 @@ import {
   Check
 } from "lucide-react"
 import Link from "next/link"
+import { useRole } from "@/contexts/role-context"
 
-const userStats = [
+const driverStats = [
   { label: "Safarlar", value: 48, icon: MapPin },
   { label: "Reyting", value: "4.8", icon: Star },
   { label: "E'lonlar", value: 12, icon: Car },
 ]
 
-const menuItems = [
+const passengerStats = [
+  { label: "Safarlar", value: 24, icon: MapPin },
+  { label: "Reyting", value: "4.9", icon: Star },
+  { label: "Bandlar", value: 18, icon: Users },
+]
+
+const driverMenuItems = [
   { icon: Edit2, label: "Profilni tahrirlash", href: "#" },
   { icon: Car, label: "Mening avtomobillarim", href: "#" },
   { icon: Settings, label: "Sozlamalar", href: "/settings" },
 ]
 
+const passengerMenuItems = [
+  { icon: Edit2, label: "Profilni tahrirlash", href: "#" },
+  { icon: MapPin, label: "Saqlangan manzillar", href: "#" },
+  { icon: Settings, label: "Sozlamalar", href: "/settings" },
+]
+
 const roleOptions = [
   {
-    id: "driver",
+    id: "driver" as const,
     icon: Car,
     label: "Haydovchi",
     description: "E'lon joylash",
     gradient: "from-primary to-primary/70",
     shadow: "shadow-primary/30",
-    href: "/driver"
+    activeColor: "bg-primary text-primary-foreground"
   },
   {
-    id: "passenger",
+    id: "passenger" as const,
     icon: Users,
     label: "Yo'lovchi",
     description: "Safar izlash",
     gradient: "from-emerald-500 to-emerald-400",
     shadow: "shadow-emerald-500/30",
-    href: "/rides"
+    activeColor: "bg-emerald-500 text-white"
   },
 ]
 
 export default function ProfilePage() {
-  const [selectedRole, setSelectedRole] = useState<string>("driver")
+  const { role, setRole } = useRole()
+  
+  const userStats = role === "driver" ? driverStats : passengerStats
+  const menuItems = role === "driver" ? driverMenuItems : passengerMenuItems
 
   return (
     <MobileLayout>
@@ -88,23 +103,22 @@ export default function ProfilePage() {
           <p className="text-xs font-medium text-muted-foreground mb-2">Foydalanuvchi turi</p>
           <div className="bg-background rounded-2xl p-1.5 shadow-lg border border-border/50">
             <div className="flex gap-1.5">
-              {roleOptions.map((role) => (
-                <Link
-                  key={role.id}
-                  href={role.href}
-                  onClick={() => setSelectedRole(role.id)}
+              {roleOptions.map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => setRole(option.id)}
                   className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl transition-all ${
-                    selectedRole === role.id
-                      ? `bg-linear-to-br ${role.gradient} text-white shadow-md ${role.shadow}`
+                    role === option.id
+                      ? `bg-linear-to-br ${option.gradient} text-white shadow-md ${option.shadow}`
                       : "text-muted-foreground hover:bg-muted"
                   }`}
                 >
-                  <role.icon className="w-4 h-4" />
-                  <span className="text-sm font-medium">{role.label}</span>
-                  {selectedRole === role.id && (
+                  <option.icon className="w-4 h-4" />
+                  <span className="text-sm font-medium">{option.label}</span>
+                  {role === option.id && (
                     <Check className="w-3.5 h-3.5" />
                   )}
-                </Link>
+                </button>
               ))}
             </div>
           </div>
