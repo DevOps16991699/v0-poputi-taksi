@@ -1,29 +1,49 @@
 "use client"
 
-import { Home, Search, User, Plus, MapPin } from "lucide-react"
+import { useState } from "react"
+import { Home, Search, User, Plus, MapPin, Car, MessageCircle, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { useRole } from "@/contexts/role-context"
+import { AppSidebar } from "@/components/app-sidebar"
 
 interface MobileLayoutProps {
   children: React.ReactNode
   showNavigation?: boolean
-  lockScroll?: boolean
-  sidebar?: React.ReactNode
+  showSidebarToggle?: boolean
 }
 
-export function MobileLayout({ children, showNavigation = true, lockScroll = false, sidebar }: MobileLayoutProps) {
+export function MobileLayout({ children, showNavigation = true, showSidebarToggle = true }: MobileLayoutProps) {
   const pathname = usePathname()
+  const { role } = useRole()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const leftNavItems = [
+  // Haydovchi uchun navigatsiya
+  const driverLeftNavItems = [
+    { href: "/", icon: Home, label: "Asosiy" },
+    { href: "/chat", icon: MessageCircle, label: "Chat" },
+  ]
+  
+  const driverRightNavItems = [
+    { href: "/tickets", icon: MapPin, label: "Safarlar" },
+    { href: "/profile", icon: User, label: "Profil" },
+  ]
+
+  // Yo'lovchi uchun navigatsiya
+  const passengerLeftNavItems = [
     { href: "/", icon: Home, label: "Asosiy" },
     { href: "/search", icon: Search, label: "Qidirish" },
   ]
   
-  const rightNavItems = [
-    { href: "/rides", icon: MapPin, label: "Safarlar" },
+  const passengerRightNavItems = [
+    { href: "/chat", icon: MessageCircle, label: "Chat" },
     { href: "/profile", icon: User, label: "Profil" },
   ]
+
+  const leftNavItems = role === "driver" ? driverLeftNavItems : passengerLeftNavItems
+  const rightNavItems = role === "driver" ? driverRightNavItems : passengerRightNavItems
+  const centerHref = role === "driver" ? "/driver" : "/search"
 
   return (
     <div className="min-h-screen bg-muted flex items-center justify-center p-4">
@@ -34,14 +54,59 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
           <div className="w-24 h-6 bg-foreground/10 rounded-full" />
         </div>
 
-        {/* Sidebar (rendered outside scrollable area) */}
-        {sidebar}
+        {/* Sidebar Toggle Button - Always visible on left top */}
+        {showSidebarToggle && (
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className={cn(
+              "absolute left-0 top-16 z-30 flex items-center justify-center w-6 h-12 bg-blue-500 hover:bg-blue-600 rounded-r-xl shadow-md shadow-blue-500/30 transition-all",
+              sidebarOpen && "opacity-0 pointer-events-none"
+            )}
+          >
+            {/* Animated walking person with glow */}
+            <svg 
+              viewBox="0 0 24 24" 
+              className="w-4 h-4 drop-shadow-[0_0_4px_rgba(255,255,255,0.9)]"
+              fill="white"
+              stroke="white"
+            >
+              {/* Head */}
+              <circle cx="12" cy="4" r="2.5" className="animate-pulse" />
+              {/* Body */}
+              <path 
+                d="M12 8 L12 14" 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                fill="none"
+              />
+              {/* Arms - waving animation */}
+              <path 
+                d="M12 10 L8 13 M12 10 L16 8" 
+                strokeWidth="2" 
+                strokeLinecap="round"
+                fill="none"
+                className="origin-center animate-[wave_0.8s_ease-in-out_infinite]"
+              />
+              {/* Legs - walking animation */}
+              <path 
+                d="M12 14 L9 20 M12 14 L15 20" 
+                strokeWidth="2" 
+                strokeLinecap="round"
+                fill="none"
+                className="origin-top animate-[walk_0.6s_ease-in-out_infinite_alternate]"
+              />
+            </svg>
+          </button>
+        )}
+
+        {/* Sidebar */}
+        <AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Content Area */}
         <div className={cn(
-          "h-full pt-12 scrollbar-none",
+          "h-full pt-12 scrollbar-none overflow-auto",
           showNavigation && "pb-20",
-          lockScroll ? "overflow-hidden" : "overflow-auto"
+          sidebarOpen && "overflow-hidden"
         )}>
           {children}
         </div>
@@ -72,10 +137,15 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
 
               {/* Center Add Button */}
               <Link
-                href="/driver"
-                className="flex items-center justify-center w-14 h-14 -mt-6 rounded-full bg-primary shadow-lg shadow-primary/40 hover:scale-105 transition-transform"
+                href={centerHref}
+                className={cn(
+                  "flex items-center justify-center w-14 h-14 -mt-6 rounded-full shadow-lg hover:scale-105 transition-transform",
+                  role === "driver" 
+                    ? "bg-primary shadow-primary/40" 
+                    : "bg-emerald-500 shadow-emerald-500/40"
+                )}
               >
-                <Plus className="h-7 w-7 text-primary-foreground" />
+                <Plus className="h-7 w-7 text-white" />
               </Link>
 
               {/* Right Nav Items */}

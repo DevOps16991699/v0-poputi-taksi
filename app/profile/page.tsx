@@ -11,23 +11,66 @@ import {
   Settings,
   LogOut,
   ChevronRight,
-  Edit2
+  Edit2,
+  Users,
+  Check
 } from "lucide-react"
 import Link from "next/link"
+import { useRole } from "@/contexts/role-context"
 
-const userStats = [
+const driverStats = [
   { label: "Safarlar", value: 48, icon: MapPin },
   { label: "Reyting", value: "4.8", icon: Star },
   { label: "E'lonlar", value: 12, icon: Car },
 ]
 
-const menuItems = [
-  { icon: Edit2, label: "Profilni tahrirlash", href: "#" },
-  { icon: Car, label: "Mening avtomobillarim", href: "#" },
+const passengerStats = [
+  { label: "Safarlar", value: 24, icon: MapPin },
+  { label: "Reyting", value: "4.9", icon: Star },
+  { label: "Bandlar", value: 18, icon: Users },
+]
+
+const driverMenuItems = [
+  { icon: Edit2, label: "Profilni tahrirlash", href: "/profile/edit" },
+  { icon: Car, label: "Mening avtomobillarim", href: "/profile/my-cars" },
+  { icon: Star, label: "Reyting va sharhlar", href: "/profile/reviews" },
   { icon: Settings, label: "Sozlamalar", href: "/settings" },
 ]
 
+const passengerMenuItems = [
+  { icon: Edit2, label: "Profilni tahrirlash", href: "/profile/edit" },
+  { icon: MapPin, label: "Saqlangan manzillar", href: "/profile/addresses" },
+  { icon: Star, label: "Reyting va sharhlar", href: "/profile/reviews" },
+  { icon: Settings, label: "Sozlamalar", href: "/settings" },
+]
+
+const roleOptions = [
+  {
+    id: "driver" as const,
+    icon: Car,
+    label: "Haydovchi",
+    description: "E'lon joylash",
+    gradient: "from-primary to-primary/70",
+    shadow: "shadow-primary/30",
+    activeColor: "bg-primary text-primary-foreground"
+  },
+  {
+    id: "passenger" as const,
+    icon: Users,
+    label: "Yo'lovchi",
+    description: "Safar izlash",
+    gradient: "from-emerald-500 to-emerald-400",
+    shadow: "shadow-emerald-500/30",
+    activeColor: "bg-emerald-500 text-white"
+  },
+]
+
 export default function ProfilePage() {
+  const { role, setRole } = useRole()
+  
+  const userStats = role === "driver" ? driverStats : passengerStats
+  const menuItems = role === "driver" ? driverMenuItems : passengerMenuItems
+
   return (
     <MobileLayout>
       <div className="flex flex-col min-h-full bg-linear-to-br from-primary/5 to-background">
@@ -57,8 +100,34 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* Role Selection - Compact Design */}
+        <div className="px-6 pt-16 pb-3">
+          <p className="text-xs font-medium text-muted-foreground mb-2">Foydalanuvchi turi</p>
+          <div className="bg-background rounded-2xl p-1.5 shadow-lg border border-border/50">
+            <div className="flex gap-1.5">
+              {roleOptions.map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => setRole(option.id)}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl transition-all ${
+                    role === option.id
+                      ? `bg-linear-to-br ${option.gradient} text-white shadow-md ${option.shadow}`
+                      : "text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <option.icon className="w-4 h-4" />
+                  <span className="text-sm font-medium">{option.label}</span>
+                  {role === option.id && (
+                    <Check className="w-3.5 h-3.5" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Stats */}
-        <div className="px-6 pt-16 pb-4">
+        <div className="px-6 pt-3 pb-4">
           <div className="grid grid-cols-3 gap-3">
             {userStats.map((stat) => (
               <div

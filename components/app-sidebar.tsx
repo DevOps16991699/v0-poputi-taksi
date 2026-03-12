@@ -1,26 +1,41 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { User, Car, Settings, X, ChevronRight, MapPin, History } from "lucide-react"
-import { PoputiLogo } from "@/components/poputi-logo"
+import { User, Car, ChevronRight, Users, Bell, Moon, Globe, Shield, Smartphone, HelpCircle, LogOut, X } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { useRole } from "@/contexts/role-context"
 
 interface AppSidebarProps {
   isOpen: boolean
   onClose: () => void
 }
 
-export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
-  const pathname = usePathname()
+const settingsMenuItems = [
+  {
+    title: "Ilova",
+    items: [
+      { icon: Bell, label: "Bildirishnomalar", description: "Push xabarnomalari", href: "#" },
+      { icon: Moon, label: "Ko'rinish", description: "Yorug' / Qorong'i rejim", href: "#" },
+      { icon: Globe, label: "Til", description: "O'zbek", href: "#" },
+    ],
+  },
+  {
+    title: "Hisob",
+    items: [
+      { icon: Shield, label: "Maxfiylik", description: "Ma'lumotlar xavfsizligi", href: "#" },
+      { icon: Smartphone, label: "Qurilmalar", description: "Ulangan qurilmalar", href: "#" },
+    ],
+  },
+  {
+    title: "Qo'llab-quvvatlash",
+    items: [
+      { icon: HelpCircle, label: "Yordam", description: "Ko'p so'raladigan savollar", href: "#" },
+    ],
+  },
+]
 
-  const menuItems = [
-    { href: "/profile", icon: User, label: "Profil" },
-    { href: "/rides", icon: MapPin, label: "Safarlar" },
-    { href: "/my-rides", icon: History, label: "Mening safarlarim" },
-    { href: "/driver", icon: Car, label: "Haydovchi bo'limi" },
-    { href: "/settings", icon: Settings, label: "Sozlamalar" },
-  ]
+export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
+  const { role, setRole } = useRole()
 
   return (
     <>
@@ -41,115 +56,99 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         )}
       >
         {/* Sidebar Header */}
-        <div className="pt-4 px-6 pb-5 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+        <div className="pt-5 px-5 pb-4 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
+          {/* User Info with Close Button */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-2 ring-primary-foreground/30">
+              <User className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <p className="flex-1 text-sm font-semibold text-primary-foreground truncate">Jamshid Karimov</p>
+            <button
+              onClick={onClose}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/70 hover:bg-primary-foreground/20 hover:text-primary-foreground transition-all"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
 
-          {/* User Info */}
-          <div className="flex items-center gap-4 mt-6">
-            <div className="w-16 h-16 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-4 ring-primary-foreground/30">
-              <User className="w-8 h-8 text-primary-foreground" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-primary-foreground">Jamshid Karimov</h3>
-              <p className="text-sm text-primary-foreground/70">+998 90 123 45 67</p>
-            </div>
+          {/* Role Selection */}
+          <div className="mt-4 bg-primary-foreground/10 rounded-xl p-1 flex gap-1">
+            <button
+              onClick={() => setRole("driver")}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-medium transition-all",
+                role === "driver"
+                  ? "bg-primary-foreground text-primary shadow-sm"
+                  : "text-primary-foreground/80 hover:bg-primary-foreground/10"
+              )}
+            >
+              <Car className="w-3.5 h-3.5" />
+              Haydovchi
+            </button>
+            <button
+              onClick={() => setRole("passenger")}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-medium transition-all",
+                role === "passenger"
+                  ? "bg-emerald-500 text-white shadow-sm"
+                  : "text-primary-foreground/80 hover:bg-primary-foreground/10"
+              )}
+            >
+              <Users className="w-3.5 h-3.5" />
+              Yo'lovchi
+            </button>
           </div>
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto scrollbar-none">          {/* Profile Tab - Separate Style */}
-          <div className="px-4 pt-4">
-            <Link
-              href="/profile"
-              onClick={onClose}
-              className={cn(
-                "flex items-center gap-4 px-4 py-4 rounded-2xl transition-all group border-2",
-                pathname === "/profile"
-                  ? "bg-primary/10 border-primary text-foreground"
-                  : "border-transparent bg-muted hover:bg-muted/80"
-              )}
-            >
-              <div className={cn(
-                "w-12 h-12 rounded-xl flex items-center justify-center",
-                pathname === "/profile"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-primary/10"
-              )}>
-                <User className={cn(
-                  "w-6 h-6",
-                  pathname === "/profile" ? "text-primary-foreground" : "text-primary"
-                )} />
-              </div>
-              <div className="flex-1">
-                <span className="font-semibold block">Profil</span>
-                <span className="text-xs text-muted-foreground">Shaxsiy ma'lumotlar</span>
-              </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </Link>
-          </div>
-
-          {/* Menu Items */}
-          <nav className="p-4">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3 px-4">
-              Asosiy menyu
-            </p>
-            <div className="space-y-1">
-              {menuItems.slice(1).map((item) => {
-                const isActive = pathname === item.href
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={onClose}
-                    className={cn(
-                      "flex items-center gap-4 px-4 py-3 rounded-xl transition-all group",
-                      isActive
-                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
-                        : "text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <div
+        <div className="flex-1 overflow-y-auto scrollbar-none">
+          {/* Settings Menu Groups */}
+          <div className="p-4 space-y-5">
+            {settingsMenuItems.map((group) => (
+              <div key={group.title}>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-1">
+                  {group.title}
+                </p>
+                <div className="bg-muted/50 rounded-2xl overflow-hidden">
+                  {group.items.map((item, index) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={onClose}
                       className={cn(
-                        "w-9 h-9 rounded-lg flex items-center justify-center transition-colors",
-                        isActive
-                          ? "bg-primary-foreground/20"
-                          : "bg-muted group-hover:bg-primary/10"
+                        "flex items-center gap-3 px-4 py-3 hover:bg-muted transition-colors",
+                        index !== group.items.length - 1 && "border-b border-border/50"
                       )}
                     >
-                      <item.icon
-                        className={cn(
-                          "w-5 h-5",
-                          isActive ? "text-primary-foreground" : "text-primary"
-                        )}
-                      />
-                    </div>
-                    <span className="font-medium flex-1">{item.label}</span>
-                    <ChevronRight
-                      className={cn(
-                        "w-5 h-5 transition-colors",
-                        isActive ? "text-primary-foreground/70" : "text-muted-foreground"
-                      )}
-                    />
-                  </Link>
-                )
-              })}
-            </div>
-          </nav>
+                      <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <item.icon className="w-4.5 h-4.5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-foreground text-sm">{item.label}</p>
+                        <p className="text-xs text-muted-foreground truncate">{item.description}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Logout Button */}
+          <div className="px-4 pb-4">
+            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl bg-destructive/10 hover:bg-destructive/20 transition-colors text-destructive">
+              <div className="w-9 h-9 rounded-xl bg-destructive/10 flex items-center justify-center">
+                <LogOut className="w-4.5 h-4.5" />
+              </div>
+              <span className="font-medium text-sm">Chiqish</span>
+            </button>
+          </div>
         </div>
 
         {/* Footer - Sticky at bottom */}
-        <div className="flex-shrink-0 p-4">
-          <div className="p-4 rounded-2xl bg-linear-to-br from-primary/10 to-accent/50 border border-primary/20">
-            <div className="flex items-center justify-center">
-              <PoputiLogo size="sm" />
-            </div>
-            <p className="text-xs text-muted-foreground text-center mt-2">v1.0 - Hamkorlik taksi</p>
-          </div>
+        <div className="flex-shrink-0 px-4 pb-4">
+          <p className="text-xs text-muted-foreground text-center">v1.0</p>
         </div>
       </div>
     </>
