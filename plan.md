@@ -25,3 +25,9 @@
 - [x] Rasm/fayl yuborish yo'q - **BAJARILDI**
 - [x] Typing indicator yo'q - **BAJARILDI**
 - [x] Online status yo'q - **BAJARILDI**
+
+#### 4.3 Sozlamalar (/settings)
+- [x] Bildirishnomalar sozlamalari sahifasi yo'q - **BAJARILDI**
+- [x] Ko'rinish (tema) o'zgartirish ishlamaydi - **BAJARILDI**
+- [x] Til o'zgartirish ishlamaydi - **BAJARILDI**
+- [x] Maxfiylik sozlamalari sahifasi yo'q - **BAJARILDI**

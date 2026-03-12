@@ -16,22 +16,22 @@ const settingsGroups = [
   {
     title: "Ilova",
     items: [
-      { icon: Bell, label: "Bildirishnomalar", description: "Push xabarnomalari", href: "#" },
-      { icon: Moon, label: "Ko'rinish", description: "Yorug' / Qorong'i rejim", href: "#" },
-      { icon: Globe, label: "Til", description: "O'zbek", href: "#" },
+      { icon: Bell, label: "Bildirishnomalar", description: "Push xabarnomalari", href: "/settings/notifications" },
+      { icon: Moon, label: "Ko'rinish", description: "Yorug' / Qorong'i rejim", href: "/settings/appearance" },
+      { icon: Globe, label: "Til", description: "O'zbek", href: "/settings/language" },
     ],
   },
   {
     title: "Hisob",
     items: [
-      { icon: Shield, label: "Maxfiylik", description: "Ma'lumotlar xavfsizligi", href: "#" },
-      { icon: Smartphone, label: "Qurilmalar", description: "Ulangan qurilmalar", href: "#" },
+      { icon: Shield, label: "Maxfiylik", description: "Ma'lumotlar xavfsizligi", href: "/settings/privacy" },
+      { icon: Smartphone, label: "Qurilmalar", description: "Ulangan qurilmalar", href: "/settings/devices" },
     ],
   },
   {
     title: "Qo'llab-quvvatlash",
     items: [
-      { icon: HelpCircle, label: "Yordam", description: "Ko'p so'raladigan savollar", href: "#" },
+      { icon: HelpCircle, label: "Yordam", description: "Ko'p so'raladigan savollar", href: "/settings/help" },
     ],
   },
 ]
