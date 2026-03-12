@@ -23,8 +23,9 @@ interface SplashProviderProps {
 }
 
 export function SplashProvider({ children }: SplashProviderProps) {
-  const [showSplash, setShowSplash] = useState(true)
+  const [showSplash, setShowSplash] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [shouldShowSplash, setShouldShowSplash] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -33,24 +34,24 @@ export function SplashProvider({ children }: SplashProviderProps) {
     const lastSeen = localStorage.getItem("poputi_splash_seen")
     const oneHour = 60 * 60 * 1000
     
-    if (lastSeen && Date.now() - parseInt(lastSeen) < oneHour) {
-      setShowSplash(false)
+    if (!lastSeen || Date.now() - parseInt(lastSeen) >= oneHour) {
+      setShouldShowSplash(true)
+      setShowSplash(true)
     }
   }, [])
 
   const handleSplashComplete = () => {
     setShowSplash(false)
+    setShouldShowSplash(false)
     localStorage.setItem("poputi_splash_seen", Date.now().toString())
-  }
-
-  if (!mounted) {
-    return null
   }
 
   return (
     <SplashContext.Provider value={{ showSplash, setShowSplash }}>
-      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={showSplash ? "opacity-0" : "opacity-100 transition-opacity duration-300"}>
+      {mounted && shouldShowSplash && showSplash && (
+        <SplashScreen onComplete={handleSplashComplete} />
+      )}
+      <div className={mounted && shouldShowSplash && showSplash ? "opacity-0 pointer-events-none" : "opacity-100 transition-opacity duration-300"}>
         {children}
       </div>
     </SplashContext.Provider>
