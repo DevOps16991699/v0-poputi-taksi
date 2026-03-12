@@ -260,12 +260,13 @@ export default function SearchPage() {
                 >
                   <X className="w-3.5 h-3.5 text-muted-foreground" />
                 </button>
-              ) : (
+              ) : !searchFrom && !searchTo && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-emerald-500/30 rounded-full animate-ping" />
-                    <div className="relative w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center animate-bounce">
-                      <PersonStanding className="w-3.5 h-3.5 text-emerald-600" />
+                    <div className="absolute -inset-1 bg-blue-500/40 rounded-full animate-ping" />
+                    <div className="absolute -inset-0.5 bg-blue-400/30 rounded-full blur-sm animate-pulse" />
+                    <div className="relative w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center animate-bounce shadow-lg shadow-blue-500/50">
+                      <PersonStanding className="w-4 h-4 text-white drop-shadow-[0_0_3px_rgba(255,255,255,0.8)]" />
                     </div>
                   </div>
                 </div>
@@ -290,12 +291,13 @@ export default function SearchPage() {
                 >
                   <X className="w-3.5 h-3.5 text-muted-foreground" />
                 </button>
-              ) : (
+              ) : searchFrom && !searchTo && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-primary/30 rounded-full animate-ping" style={{ animationDelay: "0.5s" }} />
-                    <div className="relative w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center animate-bounce" style={{ animationDelay: "0.3s" }}>
-                      <PersonStanding className="w-3.5 h-3.5 text-primary" />
+                    <div className="absolute -inset-1 bg-blue-500/40 rounded-full animate-ping" />
+                    <div className="absolute -inset-0.5 bg-blue-400/30 rounded-full blur-sm animate-pulse" />
+                    <div className="relative w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center animate-bounce shadow-lg shadow-blue-500/50">
+                      <PersonStanding className="w-4 h-4 text-white drop-shadow-[0_0_3px_rgba(255,255,255,0.8)]" />
                     </div>
                   </div>
                 </div>
