@@ -17,3 +17,11 @@
 - [x] Mening avtomobillarim sahifasi yo'q (haydovchi uchun) - **BAJARILDI**
 - [x] Saqlangan manzillar sahifasi yo'q (yo'lovchi uchun) - **BAJARILDI**
 - [x] Reyting va sharhlarni ko'rish yo'q - **BAJARILDI**
+
+#### 4.2 Chat (/chat)
+- [x] Chat conversation sahifasi yo'q (/chat/[id]) - **BAJARILDI**
+- [x] Xabar yozish va yuborish imkoniyati yo'q - **BAJARILDI**
+- [x] Xabarni o'chirish imkoniyati yo'q - **BAJARILDI**
+- [x] Rasm/fayl yuborish yo'q - **BAJARILDI**
+- [x] Typing indicator yo'q - **BAJARILDI**
+- [x] Online status yo'q - **BAJARILDI**

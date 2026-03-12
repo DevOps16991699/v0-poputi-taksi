@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { MobileLayout } from "@/components/mobile-layout"
 import { useRole } from "@/contexts/role-context"
 import { 
@@ -19,6 +20,7 @@ interface ChatItem {
   unread: number
   isRead: boolean
   avatar: string
+  isOnline: boolean
 }
 
 const driverChats: ChatItem[] = [
@@ -29,7 +31,8 @@ const driverChats: ChatItem[] = [
     time: "10:30",
     unread: 2,
     isRead: false,
-    avatar: "S"
+    avatar: "S",
+    isOnline: true
   },
   {
     id: "2", 
@@ -38,7 +41,8 @@ const driverChats: ChatItem[] = [
     time: "09:15",
     unread: 0,
     isRead: true,
-    avatar: "D"
+    avatar: "D",
+    isOnline: false
   },
   {
     id: "3",
@@ -47,28 +51,31 @@ const driverChats: ChatItem[] = [
     time: "Kecha",
     unread: 0,
     isRead: true,
-    avatar: "A"
+    avatar: "A",
+    isOnline: false
   },
 ]
 
 const passengerChats: ChatItem[] = [
   {
-    id: "1",
+    id: "4",
     name: "Bobur - Haydovchi",
     lastMessage: "5 daqiqada yetib boraman",
     time: "11:45",
     unread: 1,
     isRead: false,
-    avatar: "B"
+    avatar: "B",
+    isOnline: true
   },
   {
-    id: "2",
+    id: "5",
     name: "Jasur - Haydovchi", 
     lastMessage: "Xayr, yaxshi yo'l!",
     time: "Kecha",
     unread: 0,
     isRead: true,
-    avatar: "J"
+    avatar: "J",
+    isOnline: false
   },
 ]
 
@@ -119,15 +126,21 @@ export default function ChatPage() {
           ) : (
             <div className="divide-y divide-border/50">
               {filteredChats.map((chat) => (
-                <button
+                <Link
                   key={chat.id}
+                  href={`/chat/${chat.id}`}
                   className="w-full flex items-center gap-3 px-6 py-4 hover:bg-muted/50 transition-colors text-left"
                 >
-                  {/* Avatar */}
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold ${
-                    role === "driver" ? "bg-emerald-500" : "bg-primary"
-                  }`}>
-                    {chat.avatar}
+                  {/* Avatar with online indicator */}
+                  <div className="relative">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold ${
+                      role === "driver" ? "bg-emerald-500" : "bg-primary"
+                    }`}>
+                      {chat.avatar}
+                    </div>
+                    {chat.isOnline && (
+                      <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-background rounded-full"></span>
+                    )}
                   </div>
                   
                   {/* Content */}
@@ -151,7 +164,7 @@ export default function ChatPage() {
                       )}
                     </div>
                   </div>
-                </button>
+                </Link>
               ))}
             </div>
           )}
