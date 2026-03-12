@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils"
 
 interface SplashScreenProps {
   onComplete: () => void
+  showDisableOption?: boolean
+  onDisableAd?: () => void
 }
 
 // Shaffof porlovchi odam silueti
@@ -216,7 +218,7 @@ function PhoneWithApp({
   )
 }
 
-export function SplashScreen({ onComplete }: SplashScreenProps) {
+export function SplashScreen({ onComplete, showDisableOption = false, onDisableAd }: SplashScreenProps) {
   const [step, setStep] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
 
@@ -489,13 +491,27 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
           </p>
         </div>
 
-        {/* Skip button */}
-        <button
-          onClick={handleSkip}
-          className="mt-2 text-white/40 text-xs hover:text-white/70 transition-colors px-4 py-2"
-        >
-          O'tkazib yuborish
-        </button>
+        {/* Action buttons */}
+        <div className="flex flex-col items-center gap-2 mt-2">
+          <button
+            onClick={handleSkip}
+            className="text-white/50 text-xs hover:text-white/80 transition-colors px-4 py-2"
+          >
+            O'tkazib yuborish
+          </button>
+          
+          {showDisableOption && onDisableAd && (
+            <button
+              onClick={() => {
+                onDisableAd()
+                handleSkip()
+              }}
+              className="text-white/30 text-[10px] hover:text-white/50 transition-colors px-4 py-1"
+            >
+              Reklamani o'chirish
+            </button>
+          )}
+        </div>
       </div>
 
       {/* CSS for custom animations */}
