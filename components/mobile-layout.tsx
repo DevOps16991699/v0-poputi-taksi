@@ -1,23 +1,23 @@
 "use client"
 
+import { useState } from "react"
 import { Home, Search, User, Plus, MapPin, Car, MessageCircle, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useRole } from "@/contexts/role-context"
+import { AppSidebar } from "@/components/app-sidebar"
 
 interface MobileLayoutProps {
   children: React.ReactNode
   showNavigation?: boolean
-  lockScroll?: boolean
-  sidebar?: React.ReactNode
-  onSidebarToggle?: () => void
-  sidebarOpen?: boolean
+  showSidebarToggle?: boolean
 }
 
-export function MobileLayout({ children, showNavigation = true, lockScroll = false, sidebar, onSidebarToggle, sidebarOpen = false }: MobileLayoutProps) {
+export function MobileLayout({ children, showNavigation = true, showSidebarToggle = true }: MobileLayoutProps) {
   const pathname = usePathname()
   const { role } = useRole()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // Haydovchi uchun navigatsiya
   const driverLeftNavItems = [
@@ -54,27 +54,27 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
           <div className="w-24 h-6 bg-foreground/10 rounded-full" />
         </div>
 
-        {/* Sidebar Toggle Button - Always visible on left */}
-        {onSidebarToggle && (
+        {/* Sidebar Toggle Button - Always visible on left top */}
+        {showSidebarToggle && (
           <button
-            onClick={onSidebarToggle}
+            onClick={() => setSidebarOpen(true)}
             className={cn(
-              "absolute left-0 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-6 h-14 bg-primary/90 hover:bg-primary rounded-r-xl shadow-lg shadow-primary/30 transition-all",
+              "absolute left-0 top-16 z-30 flex items-center justify-center w-5 h-10 bg-primary/90 hover:bg-primary rounded-r-lg shadow-md shadow-primary/20 transition-all",
               sidebarOpen && "opacity-0 pointer-events-none"
             )}
           >
-            <ChevronRight className="w-4 h-4 text-primary-foreground" />
+            <ChevronRight className="w-3.5 h-3.5 text-primary-foreground" />
           </button>
         )}
 
-        {/* Sidebar (rendered outside scrollable area) */}
-        {sidebar}
+        {/* Sidebar */}
+        <AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Content Area */}
         <div className={cn(
-          "h-full pt-12 scrollbar-none",
+          "h-full pt-12 scrollbar-none overflow-auto",
           showNavigation && "pb-20",
-          lockScroll ? "overflow-hidden" : "overflow-auto"
+          sidebarOpen && "overflow-hidden"
         )}>
           {children}
         </div>

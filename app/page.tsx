@@ -1,8 +1,6 @@
 "use client"
 
-import { useState } from "react"
 import { MobileLayout } from "@/components/mobile-layout"
-import { AppSidebar } from "@/components/app-sidebar"
 import { Button } from "@/components/ui/button"
 import {
   Car,
@@ -83,19 +81,13 @@ const passengerStats = [
 ]
 
 export default function HomePage() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { role } = useRole()
   
   const stats = role === "driver" ? driverStats : passengerStats
   const isDriver = role === "driver"
 
   return (
-    <MobileLayout 
-      lockScroll={sidebarOpen} 
-      sidebar={<AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />}
-      onSidebarToggle={() => setSidebarOpen(true)}
-      sidebarOpen={sidebarOpen}
-    >
+    <MobileLayout>
       <div className="relative flex flex-col min-h-full bg-linear-to-br from-primary/5 to-background">
 
         {/* Header with Role Badge and Logo */}
