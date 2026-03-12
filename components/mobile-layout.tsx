@@ -59,22 +59,22 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
           <button
             onClick={() => setSidebarOpen(true)}
             className={cn(
-              "absolute left-0 top-16 z-30 flex items-center justify-center w-6 h-12 bg-primary/90 hover:bg-primary rounded-r-xl shadow-md shadow-primary/20 transition-all",
+              "absolute left-0 top-16 z-30 flex items-center justify-center w-6 h-12 bg-blue-500 hover:bg-blue-600 rounded-r-xl shadow-md shadow-blue-500/30 transition-all",
               sidebarOpen && "opacity-0 pointer-events-none"
             )}
           >
-            {/* Animated walking person */}
+            {/* Animated walking person with glow */}
             <svg 
               viewBox="0 0 24 24" 
-              className="w-4 h-4 text-primary-foreground"
-              fill="currentColor"
+              className="w-4 h-4 drop-shadow-[0_0_4px_rgba(255,255,255,0.9)]"
+              fill="white"
+              stroke="white"
             >
               {/* Head */}
               <circle cx="12" cy="4" r="2.5" className="animate-pulse" />
               {/* Body */}
               <path 
                 d="M12 8 L12 14" 
-                stroke="currentColor" 
                 strokeWidth="2.5" 
                 strokeLinecap="round"
                 fill="none"
@@ -82,7 +82,6 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
               {/* Arms - waving animation */}
               <path 
                 d="M12 10 L8 13 M12 10 L16 8" 
-                stroke="currentColor" 
                 strokeWidth="2" 
                 strokeLinecap="round"
                 fill="none"
@@ -91,7 +90,6 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
               {/* Legs - walking animation */}
               <path 
                 d="M12 14 L9 20 M12 14 L15 20" 
-                stroke="currentColor" 
                 strokeWidth="2" 
                 strokeLinecap="round"
                 fill="none"
