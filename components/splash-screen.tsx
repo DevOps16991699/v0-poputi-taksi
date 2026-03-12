@@ -115,53 +115,39 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
           style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)" }}
         >
           
-          {/* Step 1: Haydovchi uyda */}
+          {/* Step 1: Haydovchi uyda - haqiqiy rasm */}
           <div className={cn(
-            "absolute inset-0 flex items-center justify-center gap-6 p-4 transition-all duration-700",
+            "absolute inset-0 flex flex-col items-center justify-center transition-all duration-700",
             step === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
           )}>
-            {/* Uy */}
-            <svg viewBox="0 0 80 70" className="w-20 h-20" style={{ filter: "drop-shadow(0 0 15px rgba(255,255,255,0.3))" }}>
-              <path d="M10 35 L40 10 L70 35" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="3" strokeLinecap="round"/>
-              <rect x="18" y="35" width="44" height="30" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" strokeWidth="2" rx="2"/>
-              <rect x="34" y="45" width="12" height="20" fill="rgba(59,130,246,0.5)" rx="1"/>
-              <rect x="24" y="42" width="8" height="8" fill="rgba(250,204,21,0.6)" rx="1"/>
-              <rect x="48" y="42" width="8" height="8" fill="rgba(250,204,21,0.6)" rx="1"/>
-            </svg>
-            
-            {/* Haydovchi */}
-            <svg viewBox="0 0 50 100" className="w-12 h-24" style={{ filter: "drop-shadow(0 0 20px rgba(59,130,246,0.5))" }}>
-              <defs>
-                <linearGradient id="personGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(59,130,246,0.9)"/>
-                  <stop offset="100%" stopColor="rgba(59,130,246,0.5)"/>
-                </linearGradient>
-              </defs>
-              <circle cx="25" cy="15" r="12" fill="url(#personGrad1)"/>
-              <path d="M15 30 L35 30 L32 60 L18 60 Z" fill="url(#personGrad1)"/>
-              <path d="M18 60 L15 95 L22 95 L24 65 L26 65 L28 95 L35 95 L32 60" fill="url(#personGrad1)"/>
-              <path d="M15 35 L5 50 L8 52 L18 40" fill="url(#personGrad1)"/>
-              <path d="M35 35 L40 45 L37 47 L32 40" fill="url(#personGrad1)"/>
-            </svg>
-            
-            {/* Telefon */}
+            {/* Real image */}
             <div 
-              className="w-14 h-28 rounded-xl p-0.5"
+              className="relative w-full h-40 overflow-hidden rounded-xl"
               style={{ 
-                background: "linear-gradient(180deg, #374151, #1f2937)",
-                boxShadow: "0 0 20px rgba(255,255,255,0.2)"
+                boxShadow: "0 0 30px rgba(59,130,246,0.3), 0 0 60px rgba(16,185,129,0.2)"
               }}
             >
-              <div className="w-full h-full rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex flex-col p-1.5">
-                <div className="text-white text-center" style={{ fontSize: "5px" }}>Poputi</div>
-                <div className="flex-1 flex flex-col gap-0.5 mt-1">
-                  <div className="h-2 bg-white/30 rounded-sm"/>
-                  <div className="h-2 bg-white/30 rounded-sm"/>
-                </div>
+              <img 
+                src="/images/driver-at-home.png" 
+                alt="Haydovchi uyda" 
+                className="w-full h-full object-cover"
+                style={{ 
+                  filter: "brightness(0.9) contrast(1.1) saturate(1.1)",
+                  opacity: 0.95
+                }}
+              />
+              {/* Overlay gradient */}
+              <div 
+                className="absolute inset-0"
+                style={{ 
+                  background: "linear-gradient(to top, rgba(12,25,41,0.8) 0%, transparent 50%, rgba(12,25,41,0.3) 100%)"
+                }}
+              />
+              {/* Text overlay */}
+              <div className="absolute bottom-3 left-0 right-0 text-center">
+                <p className="text-white/90 text-xs font-medium">Haydovchi uyda turib e'lon joylashtiryapti</p>
               </div>
             </div>
-            
-            <p className="absolute bottom-3 text-white/70 text-xs">Haydovchi uyda...</p>
           </div>
 
           {/* Step 2: E'lon joylashtirildi */}
