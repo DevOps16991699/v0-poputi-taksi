@@ -48,3 +48,9 @@
 - [x] Haydovchi profili va reytingini ko'rish yo'q - **BAJARILDI**
 - [x] Mashina haqida to'liq ma'lumot yo'q - **BAJARILDI**
 - [x] Yo'l xaritasi ko'rsatilmaydi - **BAJARILDI**
+
+#### 3.3 Band Qilish
+- [x] Band qilish confirmation dialog yo'q - **BAJARILDI**
+- [x] Nechta joy band qilishni tanlash imkoniyati yo'q - **BAJARILDI**
+- [x] Band qilishni bekor qilish imkoniyati yo'q - **BAJARILDI**
+- [x] To'lov integratsiyasi yo'q - **BAJARILDI**

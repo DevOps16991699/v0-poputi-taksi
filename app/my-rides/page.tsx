@@ -12,7 +12,9 @@ import {
   Search,
   CheckCircle2,
   XCircle,
-  Ticket
+  Ticket,
+  X,
+  AlertCircle
 } from "lucide-react"
 import Link from "next/link"
 
@@ -56,9 +58,15 @@ const myBookings = [
 ]
 
 export default function MyRidesPage() {
-  const confirmedBookings = myBookings.filter(b => b.status === "confirmed")
-  const pendingBookings = myBookings.filter(b => b.status === "pending")
-  const completedBookings = myBookings.filter(b => b.status === "completed")
+  const [bookings, setBookings] = useState(myBookings)
+  
+  const confirmedBookings = bookings.filter(b => b.status === "confirmed")
+  const pendingBookings = bookings.filter(b => b.status === "pending")
+  const completedBookings = bookings.filter(b => b.status === "completed")
+  
+  const handleCancelBooking = (id: number) => {
+    setBookings(prev => prev.filter(b => b.id !== id))
+  }
 
   return (
     <MobileLayout>
@@ -77,7 +85,7 @@ export default function MyRidesPage() {
             </Link>
           </div>
           <p className="text-sm text-muted-foreground">
-            Jami {myBookings.length} ta safar
+            Jami {bookings.length} ta safar
           </p>
         </header>
 
@@ -90,7 +98,7 @@ export default function MyRidesPage() {
             </h2>
             <div className="space-y-3">
               {confirmedBookings.map((booking) => (
-                <BookingCard key={booking.id} booking={booking} />
+                <BookingCard key={booking.id} booking={booking} onCancel={handleCancelBooking} />
               ))}
             </div>
           </div>
@@ -105,7 +113,7 @@ export default function MyRidesPage() {
             </h2>
             <div className="space-y-3">
               {pendingBookings.map((booking) => (
-                <BookingCard key={booking.id} booking={booking} />
+                <BookingCard key={booking.id} booking={booking} onCancel={handleCancelBooking} />
               ))}
             </div>
           </div>
@@ -127,7 +135,7 @@ export default function MyRidesPage() {
         )}
 
         {/* Empty State */}
-        {myBookings.length === 0 && (
+        {bookings.length === 0 && (
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
             <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
               <Ticket className="w-8 h-8 text-muted-foreground" />
@@ -161,12 +169,15 @@ interface Booking {
   phone: string
 }
 
-function BookingCard({ booking }: { booking: Booking }) {
+function BookingCard({ booking, onCancel }: { booking: Booking; onCancel?: (id: number) => void }) {
   const [showPhone, setShowPhone] = useState(false)
+  const [showCancelDialog, setShowCancelDialog] = useState(false)
   const isCompleted = booking.status === "completed"
   const isPending = booking.status === "pending"
+  const isConfirmed = booking.status === "confirmed"
 
   return (
+    <>
     <div className={`bg-background rounded-2xl p-4 shadow-lg border ${
       isCompleted ? "border-border/30 opacity-75" : "border-border/50"
     }`}>
@@ -216,24 +227,36 @@ function BookingCard({ booking }: { booking: Booking }) {
         </div>
         
         {!isCompleted && (
-          <Button
-            size="sm"
-            onClick={() => setShowPhone(!showPhone)}
-            className={`rounded-xl ${
-              isPending 
-                ? "bg-amber-500 hover:bg-amber-500/90" 
-                : "bg-emerald-500 hover:bg-emerald-500/90"
-            }`}
-          >
-            {showPhone ? (
-              <span className="flex items-center gap-1">
-                <Phone className="w-4 h-4" />
-                {booking.phone.slice(0, 12)}...
-              </span>
-            ) : (
-              isPending ? "Kutilmoqda" : "Aloqa"
+          <div className="flex items-center gap-2">
+            {(isConfirmed || isPending) && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setShowCancelDialog(true)}
+                className="rounded-xl text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             )}
-          </Button>
+            <Button
+              size="sm"
+              onClick={() => setShowPhone(!showPhone)}
+              className={`rounded-xl ${
+                isPending 
+                  ? "bg-amber-500 hover:bg-amber-500/90" 
+                  : "bg-emerald-500 hover:bg-emerald-500/90"
+              }`}
+            >
+              {showPhone ? (
+                <span className="flex items-center gap-1">
+                  <Phone className="w-4 h-4" />
+                  {booking.phone.slice(0, 12)}...
+                </span>
+              ) : (
+                isPending ? "Kutilmoqda" : "Aloqa"
+              )}
+            </Button>
+          </div>
         )}
 
         {isCompleted && (
@@ -244,5 +267,48 @@ function BookingCard({ booking }: { booking: Booking }) {
         )}
       </div>
     </div>
+
+    {/* Cancel Confirmation Dialog */}
+    {showCancelDialog && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div 
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowCancelDialog(false)}
+        />
+        <div className="relative bg-background rounded-3xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+          <div className="text-center">
+            <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
+              <AlertCircle className="w-8 h-8 text-red-500" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground mb-2">Bekor qilishni tasdiqlang</h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              {booking.from} - {booking.to}
+            </p>
+            <p className="text-xs text-muted-foreground mb-6">
+              Haqiqatan ham bu safarni bekor qilmoqchimisiz?
+            </p>
+            <div className="flex gap-3">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowCancelDialog(false)}
+                className="flex-1 h-12 rounded-xl"
+              >
+                Yo'q
+              </Button>
+              <Button 
+                onClick={() => {
+                  setShowCancelDialog(false)
+                  onCancel?.(booking.id)
+                }}
+                className="flex-1 h-12 rounded-xl bg-red-500 hover:bg-red-500/90"
+              >
+                Ha, bekor qilish
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   )
 }
