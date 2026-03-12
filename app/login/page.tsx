@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,13 +10,17 @@ import { PoputiLogo } from "@/components/poputi-logo"
 import Link from "next/link"
 
 export default function LoginPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [phone, setPhone] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Login:", { phone, password })
+    // Hozircha to'g'ridan-to'g'ri kirib ketadi
+    localStorage.setItem("poputi_user_token", "demo_token")
+    localStorage.setItem("poputi_user_data", JSON.stringify({ phone, name: "Foydalanuvchi" }))
+    router.push("/")
   }
 
   return (

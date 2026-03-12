@@ -1,14 +1,18 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Car, Eye, EyeOff, Phone, Lock, User } from "lucide-react"
 import { PoputiLogo } from "@/components/poputi-logo"
 import Link from "next/link"
+import { useRole } from "@/contexts/role-context"
 
 export default function SignupPage() {
+  const router = useRouter()
+  const { setRole } = useRole()
   const [showPassword, setShowPassword] = useState(false)
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
@@ -17,7 +21,11 @@ export default function SignupPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Signup:", { name, phone, password, userType })
+    // Tanlangan rolni saqlash va kirib ketish
+    setRole(userType)
+    localStorage.setItem("poputi_user_token", "demo_token")
+    localStorage.setItem("poputi_user_data", JSON.stringify({ name, phone, userType }))
+    router.push("/")
   }
 
   return (
