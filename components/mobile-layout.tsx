@@ -1,0 +1,108 @@
+"use client"
+
+import { Home, Search, User, Plus, MapPin } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
+
+interface MobileLayoutProps {
+  children: React.ReactNode
+  showNavigation?: boolean
+  lockScroll?: boolean
+  sidebar?: React.ReactNode
+}
+
+export function MobileLayout({ children, showNavigation = true, lockScroll = false, sidebar }: MobileLayoutProps) {
+  const pathname = usePathname()
+
+  const leftNavItems = [
+    { href: "/", icon: Home, label: "Asosiy" },
+    { href: "/search", icon: Search, label: "Qidirish" },
+  ]
+  
+  const rightNavItems = [
+    { href: "/rides", icon: MapPin, label: "Safarlar" },
+    { href: "/profile", icon: User, label: "Profil" },
+  ]
+
+  return (
+    <div className="min-h-screen bg-muted flex items-center justify-center p-4">
+      {/* Phone Frame */}
+      <div className="relative w-full max-w-[380px] h-[780px] bg-background rounded-[3rem] shadow-2xl overflow-hidden border-8 border-foreground/10">
+        {/* Status Bar */}
+        <div className="absolute top-0 left-0 right-0 h-12 bg-background z-10 flex items-center justify-center">
+          <div className="w-24 h-6 bg-foreground/10 rounded-full" />
+        </div>
+
+        {/* Sidebar (rendered outside scrollable area) */}
+        {sidebar}
+
+        {/* Content Area */}
+        <div className={cn(
+          "h-full pt-12 scrollbar-none",
+          showNavigation && "pb-20",
+          lockScroll ? "overflow-hidden" : "overflow-auto"
+        )}>
+          {children}
+        </div>
+
+        {/* Bottom Navigation */}
+        {showNavigation && (
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-background border-t border-border">
+            <div className="flex items-center justify-around h-full px-4">
+              {/* Left Nav Items */}
+              {leftNavItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "flex flex-col items-center gap-1 p-2 rounded-xl transition-all",
+                      isActive
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <item.icon className={cn("h-5 w-5", isActive && "fill-primary/20")} />
+                    <span className="text-[10px] font-medium">{item.label}</span>
+                  </Link>
+                )
+              })}
+
+              {/* Center Add Button */}
+              <Link
+                href="/driver"
+                className="flex items-center justify-center w-14 h-14 -mt-6 rounded-full bg-primary shadow-lg shadow-primary/40 hover:scale-105 transition-transform"
+              >
+                <Plus className="h-7 w-7 text-primary-foreground" />
+              </Link>
+
+              {/* Right Nav Items */}
+              {rightNavItems.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "flex flex-col items-center gap-1 p-2 rounded-xl transition-all",
+                      isActive
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <item.icon className={cn("h-5 w-5", isActive && "fill-primary/20")} />
+                    <span className="text-[10px] font-medium">{item.label}</span>
+                  </Link>
+                )
+              })}
+            </div>
+            {/* Home Indicator */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-foreground/20 rounded-full" />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
