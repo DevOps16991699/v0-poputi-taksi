@@ -255,10 +255,12 @@ interface StatCardProps {
 function StatCard({ label, value, icon: Icon, gradient, shadow }: StatCardProps) {
   return (
     <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50 hover:scale-[1.02] transition-transform cursor-pointer">
-      <div className={`w-10 h-10 rounded-xl bg-linear-to-br ${gradient} flex items-center justify-center mb-2 shadow-md ${shadow}`}>
-        <Icon className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-3 mb-2">
+        <div className={`w-10 h-10 rounded-xl bg-linear-to-br ${gradient} flex items-center justify-center shadow-md ${shadow}`}>
+          <Icon className="w-5 h-5 text-white" />
+        </div>
+        <p className="text-2xl font-bold text-foreground">{value}</p>
       </div>
-      <p className="text-xl font-bold text-foreground">{value}</p>
       <p className="text-xs text-muted-foreground">{label}</p>
     </div>
   )
