@@ -31,14 +31,16 @@ const passengerStats = [
 ]
 
 const driverMenuItems = [
-  { icon: Edit2, label: "Profilni tahrirlash", href: "#" },
-  { icon: Car, label: "Mening avtomobillarim", href: "#" },
+  { icon: Edit2, label: "Profilni tahrirlash", href: "/profile/edit" },
+  { icon: Car, label: "Mening avtomobillarim", href: "/profile/my-cars" },
+  { icon: Star, label: "Reyting va sharhlar", href: "/profile/reviews" },
   { icon: Settings, label: "Sozlamalar", href: "/settings" },
 ]
 
 const passengerMenuItems = [
-  { icon: Edit2, label: "Profilni tahrirlash", href: "#" },
-  { icon: MapPin, label: "Saqlangan manzillar", href: "#" },
+  { icon: Edit2, label: "Profilni tahrirlash", href: "/profile/edit" },
+  { icon: MapPin, label: "Saqlangan manzillar", href: "/profile/addresses" },
+  { icon: Star, label: "Reyting va sharhlar", href: "/profile/reviews" },
   { icon: Settings, label: "Sozlamalar", href: "/settings" },
 ]
 
