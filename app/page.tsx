@@ -10,7 +10,6 @@ import {
   Clock,
   CheckCircle2,
   MapPin,
-  Menu,
   Search,
   Plus,
   Ticket
@@ -91,20 +90,18 @@ export default function HomePage() {
   const isDriver = role === "driver"
 
   return (
-    <MobileLayout lockScroll={sidebarOpen} sidebar={<AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />}>
+    <MobileLayout 
+      lockScroll={sidebarOpen} 
+      sidebar={<AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />}
+      onSidebarToggle={() => setSidebarOpen(true)}
+      sidebarOpen={sidebarOpen}
+    >
       <div className="relative flex flex-col min-h-full bg-linear-to-br from-primary/5 to-background">
 
-        {/* Header with Menu, Role Badge, and Logo */}
+        {/* Header with Role Badge and Logo */}
         <header className="px-6 py-4">
           <div className="bg-background rounded-2xl p-3 shadow-lg border border-border/50 flex items-center justify-between">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
-            >
-              <Menu className="w-5 h-5 text-primary" />
-            </button>
-            
-            {/* Role Badge - Center */}
+            {/* Role Badge */}
             <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
               isDriver 
                 ? "bg-primary/10 text-primary" 

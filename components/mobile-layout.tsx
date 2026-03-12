@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Search, User, Plus, MapPin, Car, MessageCircle } from "lucide-react"
+import { Home, Search, User, Plus, MapPin, Car, MessageCircle, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -11,9 +11,11 @@ interface MobileLayoutProps {
   showNavigation?: boolean
   lockScroll?: boolean
   sidebar?: React.ReactNode
+  onSidebarToggle?: () => void
+  sidebarOpen?: boolean
 }
 
-export function MobileLayout({ children, showNavigation = true, lockScroll = false, sidebar }: MobileLayoutProps) {
+export function MobileLayout({ children, showNavigation = true, lockScroll = false, sidebar, onSidebarToggle, sidebarOpen = false }: MobileLayoutProps) {
   const pathname = usePathname()
   const { role } = useRole()
 
@@ -51,6 +53,19 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
         <div className="absolute top-0 left-0 right-0 h-12 bg-background z-10 flex items-center justify-center">
           <div className="w-24 h-6 bg-foreground/10 rounded-full" />
         </div>
+
+        {/* Sidebar Toggle Button - Always visible on left */}
+        {onSidebarToggle && (
+          <button
+            onClick={onSidebarToggle}
+            className={cn(
+              "absolute left-0 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-6 h-14 bg-primary/90 hover:bg-primary rounded-r-xl shadow-lg shadow-primary/30 transition-all",
+              sidebarOpen && "opacity-0 pointer-events-none"
+            )}
+          >
+            <ChevronRight className="w-4 h-4 text-primary-foreground" />
+          </button>
+        )}
 
         {/* Sidebar (rendered outside scrollable area) */}
         {sidebar}
