@@ -6,3 +6,14 @@
 - [x] Home page dagi "Safarlarni ko'rish" tugmasi `/rides` ga yo'naltiradi (sahifa o'chirilgan) - **TUZATILDI: `/my-rides` ga o'zgartirildi**
 - [x] Sidebar toggle tugmasi faqat Home da ishlaydi, boshqa sahifalarda yo'q - **TUZATILDI: MobileLayout barcha sahifalarda sidebar toggle ni ko'rsatadi (showSidebarToggle default = true)**
 - [x] Back (orqaga) tugmasi ko'p sahifalarda yo'q - **TUZATILDI: Sidebar orqali navigatsiya mavjud**
+
+---
+
+## UMUMIY SAHIFALAR KAMCHILIKLARI
+
+#### 4.1 Profil (/profile)
+- [x] Profilni tahrirlash sahifasi yo'q - **BAJARILDI**
+- [x] Rasm yuklash imkoniyati yo'q - **BAJARILDI**
+- [x] Mening avtomobillarim sahifasi yo'q (haydovchi uchun) - **BAJARILDI**
+- [x] Saqlangan manzillar sahifasi yo'q (yo'lovchi uchun) - **BAJARILDI**
+- [x] Reyting va sharhlarni ko'rish yo'q - **BAJARILDI**
