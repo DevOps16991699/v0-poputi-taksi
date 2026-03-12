@@ -155,7 +155,7 @@ export default function HomePage() {
           </div>
 
           {/* CTA Button */}
-          <Link href={isDriver ? "/tickets" : "/rides"} className="block">
+          <Link href={isDriver ? "/tickets" : "/my-rides"} className="block">
             <Button
               size="lg"
               className={`w-full rounded-2xl h-14 text-base font-semibold shadow-lg ${
@@ -164,7 +164,7 @@ export default function HomePage() {
                   : "shadow-emerald-500/30 bg-emerald-500 hover:bg-emerald-500/90"
               }`}
             >
-              {isDriver ? "Mening e'lonlarim" : "Safarlarni ko'rish"}
+              {isDriver ? "Mening e'lonlarim" : "Mening safarlarim"}
             </Button>
           </Link>
         </div>

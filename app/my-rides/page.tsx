@@ -69,7 +69,7 @@ export default function MyRidesPage() {
             <h1 className="text-2xl font-bold text-foreground">
               Band qilganlarim
             </h1>
-            <Link href="/rides">
+            <Link href="/search">
               <Button size="sm" className="rounded-xl bg-emerald-500 hover:bg-emerald-500/90">
                 <Search className="w-4 h-4 mr-1" />
                 Izlash
@@ -135,7 +135,7 @@ export default function MyRidesPage() {
             <p className="text-muted-foreground text-center mb-4">
               Sizda hali band qilingan safarlar yo'q
             </p>
-            <Link href="/rides">
+            <Link href="/search">
               <Button className="rounded-xl bg-emerald-500 hover:bg-emerald-500/90">
                 <Search className="w-4 h-4 mr-2" />
                 Safar izlash
