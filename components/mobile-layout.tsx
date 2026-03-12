@@ -22,11 +22,11 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
   // Haydovchi uchun navigatsiya
   const driverLeftNavItems = [
     { href: "/", icon: Home, label: "Asosiy" },
-    { href: "/chat", icon: MessageCircle, label: "Chat" },
+    { href: "/driver/trips", icon: Ticket, label: "Safarlar" },
   ]
   
   const driverRightNavItems = [
-    { href: "/driver/trips", icon: Ticket, label: "Safarlar" },
+    { href: "/chat", icon: MessageCircle, label: "Chat" },
     { href: "/profile", icon: User, label: "Profil" },
   ]
 
