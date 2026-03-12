@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import { MobileLayout } from "@/components/mobile-layout"
+import { SmartBackButton } from "@/components/smart-back-button"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import {
-  ArrowLeft,
   Bell,
   MessageSquare,
   Car,
@@ -13,7 +13,6 @@ import {
   Megaphone,
   Shield
 } from "lucide-react"
-import Link from "next/link"
 
 interface NotificationSetting {
   id: string
@@ -90,11 +89,7 @@ export default function NotificationsSettingsPage() {
       <div className="flex flex-col min-h-full bg-linear-to-br from-primary/5 to-background">
         {/* Header */}
         <header className="flex items-center gap-4 px-4 py-4 border-b border-border/50">
-          <Link href="/settings">
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-          </Link>
+          <SmartBackButton fallbackUrl="/settings" className="rounded-full" />
           <div>
             <h1 className="text-lg font-bold text-foreground">Bildirishnomalar</h1>
             <p className="text-xs text-muted-foreground">Xabarnomalarni sozlash</p>

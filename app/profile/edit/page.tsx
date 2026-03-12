@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { MobileLayout } from "@/components/mobile-layout"
+import { SmartBackButton } from "@/components/smart-back-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
-  ArrowLeft,
   User,
   Phone,
   Mail,
@@ -14,7 +14,6 @@ import {
   Check,
   Loader2
 } from "lucide-react"
-import Link from "next/link"
 
 export default function EditProfilePage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -53,11 +52,7 @@ export default function EditProfilePage() {
         {/* Header */}
         <div className="sticky top-0 z-10 bg-background border-b border-border px-4 py-3">
           <div className="flex items-center gap-3">
-            <Link href="/profile">
-              <Button variant="ghost" size="icon" className="rounded-xl">
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-            </Link>
+            <SmartBackButton fallbackUrl="/profile" />
             <h1 className="text-lg font-bold text-foreground">Profilni tahrirlash</h1>
           </div>
         </div>
