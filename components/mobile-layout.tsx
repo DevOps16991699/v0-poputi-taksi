@@ -59,11 +59,45 @@ export function MobileLayout({ children, showNavigation = true, showSidebarToggl
           <button
             onClick={() => setSidebarOpen(true)}
             className={cn(
-              "absolute left-0 top-16 z-30 flex items-center justify-center w-5 h-10 bg-primary/90 hover:bg-primary rounded-r-lg shadow-md shadow-primary/20 transition-all",
+              "absolute left-0 top-16 z-30 flex items-center justify-center w-6 h-12 bg-primary/90 hover:bg-primary rounded-r-xl shadow-md shadow-primary/20 transition-all",
               sidebarOpen && "opacity-0 pointer-events-none"
             )}
           >
-            <ChevronRight className="w-3.5 h-3.5 text-primary-foreground" />
+            {/* Animated walking person */}
+            <svg 
+              viewBox="0 0 24 24" 
+              className="w-4 h-4 text-primary-foreground"
+              fill="currentColor"
+            >
+              {/* Head */}
+              <circle cx="12" cy="4" r="2.5" className="animate-pulse" />
+              {/* Body */}
+              <path 
+                d="M12 8 L12 14" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                fill="none"
+              />
+              {/* Arms - waving animation */}
+              <path 
+                d="M12 10 L8 13 M12 10 L16 8" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round"
+                fill="none"
+                className="origin-center animate-[wave_0.8s_ease-in-out_infinite]"
+              />
+              {/* Legs - walking animation */}
+              <path 
+                d="M12 14 L9 20 M12 14 L15 20" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round"
+                fill="none"
+                className="origin-top animate-[walk_0.6s_ease-in-out_infinite_alternate]"
+              />
+            </svg>
           </button>
         )}
 

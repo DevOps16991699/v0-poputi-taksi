@@ -134,3 +134,19 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Walking person animation */
+@keyframes wave {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes walk {
+  0% { transform: skewX(-5deg); }
+  100% { transform: skewX(5deg); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
