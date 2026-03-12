@@ -20,7 +20,7 @@ import {
   MessageCircle
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useRole } from "@/contexts/role-context"
 
 interface AppSidebarProps {
@@ -58,8 +58,19 @@ const settingsMenuItems = [
 export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
   const { role, setRole } = useRole()
   const pathname = usePathname()
+  const router = useRouter()
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/")
+
+  const handleLogout = () => {
+    // Clear any stored data
+    localStorage.removeItem("poputi_splash_seen")
+    localStorage.removeItem("poputi_user_token")
+    localStorage.removeItem("poputi_user_data")
+    
+    onClose()
+    router.push("/login")
+  }
 
   return (
     <>
@@ -226,16 +237,15 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
 
           {/* Logout Button */}
           <div className="px-2 pb-2">
-            <Link
-              href="/login"
-              onClick={onClose}
+            <button
+              onClick={handleLogout}
               className="w-full flex items-center gap-2 px-2 py-2 rounded-lg bg-destructive/5 hover:bg-destructive/10 active:bg-destructive/15 transition-all duration-200 text-destructive group"
             >
               <div className="w-7 h-7 rounded-lg bg-destructive/10 flex items-center justify-center group-hover:bg-destructive/20 transition-colors">
                 <LogOut className="w-3.5 h-3.5" />
               </div>
               <span className="font-medium text-xs">Chiqish</span>
-            </Link>
+            </button>
           </div>
         </div>
 
