@@ -36,7 +36,7 @@ const settingsMenuItems = [
 ]
 
 export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
-  const { role } = useRole()
+  const { role, setRole } = useRole()
 
   return (
     <>
@@ -57,33 +57,9 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         )}
       >
         {/* Sidebar Header */}
-        <div className="pt-4 px-6 pb-5 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
-          {/* Top row: Close button, Role badge, Logo */}
-          <div className="flex items-center justify-between">
-            <button
-              onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            
-            {/* Role Badge - Center */}
-            <span className={cn(
-              "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium",
-              role === "driver" 
-                ? "bg-primary-foreground/20 text-primary-foreground" 
-                : "bg-emerald-500/80 text-white"
-            )}>
-              {role === "driver" ? <Car className="w-3.5 h-3.5" /> : <Users className="w-3.5 h-3.5" />}
-              {role === "driver" ? "Haydovchi sifatida" : "Yo'lovchi sifatida"}
-            </span>
-            
-            {/* Logo placeholder for alignment */}
-            <div className="w-8 h-8" />
-          </div>
-
+        <div className="pt-6 px-6 pb-5 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
           {/* User Info */}
-          <div className="flex items-center gap-4 mt-5">
+          <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-4 ring-primary-foreground/30">
               <User className="w-7 h-7 text-primary-foreground" />
             </div>
@@ -91,6 +67,34 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
               <h3 className="text-lg font-semibold text-primary-foreground">Jamshid Karimov</h3>
               <p className="text-sm text-primary-foreground/70">+998 90 123 45 67</p>
             </div>
+          </div>
+
+          {/* Role Selection */}
+          <div className="mt-4 bg-primary-foreground/10 rounded-xl p-1 flex gap-1">
+            <button
+              onClick={() => setRole("driver")}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-medium transition-all",
+                role === "driver"
+                  ? "bg-primary-foreground text-primary shadow-sm"
+                  : "text-primary-foreground/80 hover:bg-primary-foreground/10"
+              )}
+            >
+              <Car className="w-3.5 h-3.5" />
+              Haydovchi
+            </button>
+            <button
+              onClick={() => setRole("passenger")}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-medium transition-all",
+                role === "passenger"
+                  ? "bg-emerald-500 text-white shadow-sm"
+                  : "text-primary-foreground/80 hover:bg-primary-foreground/10"
+              )}
+            >
+              <Users className="w-3.5 h-3.5" />
+              Yo'lovchi
+            </button>
           </div>
         </div>
 
