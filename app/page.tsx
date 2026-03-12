@@ -94,7 +94,7 @@ export default function HomePage() {
     <MobileLayout lockScroll={sidebarOpen} sidebar={<AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />}>
       <div className="relative flex flex-col min-h-full bg-linear-to-br from-primary/5 to-background">
 
-        {/* Header with Menu and Logo */}
+        {/* Header with Menu, Role Badge, and Logo */}
         <header className="px-6 py-4">
           <div className="bg-background rounded-2xl p-3 shadow-lg border border-border/50 flex items-center justify-between">
             <button
@@ -103,6 +103,17 @@ export default function HomePage() {
             >
               <Menu className="w-5 h-5 text-primary" />
             </button>
+            
+            {/* Role Badge - Center */}
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
+              isDriver 
+                ? "bg-primary/10 text-primary" 
+                : "bg-emerald-500/10 text-emerald-600"
+            }`}>
+              {isDriver ? <Car className="w-3.5 h-3.5" /> : <Users className="w-3.5 h-3.5" />}
+              {isDriver ? "Haydovchi" : "Yo'lovchi"}
+            </div>
+            
             <div className="flex items-center gap-2">
               <PoputiLogoIcon className="w-8 h-8" />
               <div>
@@ -115,17 +126,6 @@ export default function HomePage() {
 
         {/* Main Content */}
         <div className="flex-1 px-6 pb-6">
-          {/* Role indicator */}
-          <div className="mb-4">
-            <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
-              isDriver 
-                ? "bg-primary/10 text-primary" 
-                : "bg-emerald-500/10 text-emerald-600"
-            }`}>
-              {isDriver ? <Car className="w-3.5 h-3.5" /> : <Users className="w-3.5 h-3.5" />}
-              {isDriver ? "Haydovchi sifatida" : "Yo'lovchi sifatida"}
-            </div>
-          </div>
 
           {/* Quick Action Card */}
           <Link href={isDriver ? "/driver" : "/search"} className="block mb-6">
