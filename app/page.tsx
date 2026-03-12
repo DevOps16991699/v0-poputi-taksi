@@ -184,7 +184,7 @@ export default function HomePage() {
         <div className="flex-1 px-6 pb-6">
 
           {/* Quick Action Card - Driver Only */}
-          {isDriver ? (
+          {isDriver && (
             <Link href="/driver" className="block mb-6">
               <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50 flex items-center gap-3 transition-colors hover:border-primary/50">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-primary/10">
@@ -197,18 +197,6 @@ export default function HomePage() {
                 <MapPin className="w-5 h-5 text-muted-foreground" />
               </div>
             </Link>
-          ) : (
-            /* Passenger - Horizontal Scrolling Rides Announcements */
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-base font-semibold text-foreground">Mavjud safarlar</h3>
-                <Link href="/search" className="text-xs text-emerald-600 font-medium flex items-center gap-1">
-                  Barchasini ko'rish
-                  <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
-              <RidesMarquee rides={availableRides} />
-            </div>
           )}
 
           {/* Statistics */}
@@ -222,6 +210,20 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+
+          {/* Passenger - Horizontal Scrolling Rides Announcements */}
+          {!isDriver && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base font-semibold text-foreground">Mavjud safarlar</h3>
+                <Link href="/search" className="text-xs text-emerald-600 font-medium flex items-center gap-1">
+                  Barchasini ko'rish
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+              <RidesMarquee rides={availableRides} />
+            </div>
+          )}
 
           {/* CTA Button */}
           <Link href={isDriver ? "/tickets" : "/my-rides"} className="block">
