@@ -84,21 +84,28 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
         
         {/* Logo */}
         <div className={cn(
-          "transition-all duration-700",
+          "transition-all duration-700 flex flex-col items-center",
           step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <div 
-            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-3"
+            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-2 overflow-hidden"
             style={{ 
-              background: "linear-gradient(135deg, #3b82f6, #10b981)",
-              boxShadow: "0 0 40px rgba(59,130,246,0.5)"
+              background: "rgba(255,255,255,0.1)",
+              backdropFilter: "blur(10px)",
+              boxShadow: "0 0 40px rgba(59,130,246,0.4), 0 0 80px rgba(16,185,129,0.2)"
             }}
           >
-            <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-            </svg>
+            <img 
+              src="/images/poputi-logo.jpg" 
+              alt="Poputi Taksi" 
+              className="w-16 h-16 object-contain"
+              style={{ 
+                filter: "brightness(1.2) contrast(1.1)",
+                mixBlendMode: "screen",
+                opacity: 0.9
+              }}
+            />
           </div>
-          <h1 className="text-xl font-bold text-white text-center">Poputi Taksi</h1>
         </div>
 
         {/* Animation Scene */}
