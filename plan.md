@@ -31,3 +31,14 @@
 - [x] Ko'rinish (tema) o'zgartirish ishlamaydi - **BAJARILDI**
 - [x] Til o'zgartirish ishlamaydi - **BAJARILDI**
 - [x] Maxfiylik sozlamalari sahifasi yo'q - **BAJARILDI**
+
+---
+
+## YO'LOVCHI ROLI UCHUN KAMCHILIKLAR
+
+#### 3.1 Safar Qidirish (/search)
+- [x] Sana bo'yicha filter ishlamaydi - **BAJARILDI**
+- [x] Narx bo'yicha filter yo'q - **BAJARILDI**
+- [x] Vaqt bo'yicha filter yo'q - **BAJARILDI**
+- [x] Saqlangan qidiruvlar yo'q - **BAJARILDI**
+- [x] Xarita ko'rinishi yo'q - **BAJARILDI**
