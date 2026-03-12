@@ -270,28 +270,28 @@ function BookingCard({ booking, onCancel }: { booking: Booking; onCancel?: (id: 
 
     {/* Cancel Confirmation Dialog */}
     {showCancelDialog && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
         <div 
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/60"
           onClick={() => setShowCancelDialog(false)}
         />
-        <div className="relative bg-background rounded-3xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+        <div className="relative bg-background rounded-2xl w-full p-5 animate-in zoom-in-95 duration-200">
           <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
-              <AlertCircle className="w-8 h-8 text-red-500" />
+            <div className="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-3">
+              <AlertCircle className="w-7 h-7 text-red-500" />
             </div>
-            <h3 className="text-lg font-bold text-foreground mb-2">Bekor qilishni tasdiqlang</h3>
-            <p className="text-sm text-muted-foreground mb-2">
+            <h3 className="text-base font-bold text-foreground mb-1">Bekor qilishni tasdiqlang</h3>
+            <p className="text-xs text-muted-foreground mb-1">
               {booking.from} - {booking.to}
             </p>
-            <p className="text-xs text-muted-foreground mb-6">
+            <p className="text-[10px] text-muted-foreground mb-5">
               Haqiqatan ham bu safarni bekor qilmoqchimisiz?
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <Button 
                 variant="outline" 
                 onClick={() => setShowCancelDialog(false)}
-                className="flex-1 h-12 rounded-xl"
+                className="flex-1 h-11 rounded-xl active:scale-[0.98]"
               >
                 Yo'q
               </Button>
@@ -300,7 +300,7 @@ function BookingCard({ booking, onCancel }: { booking: Booking; onCancel?: (id: 
                   setShowCancelDialog(false)
                   onCancel?.(booking.id)
                 }}
-                className="flex-1 h-12 rounded-xl bg-red-500 hover:bg-red-500/90"
+                className="flex-1 h-11 rounded-xl bg-red-500 active:bg-red-600"
               >
                 Ha, bekor qilish
               </Button>

@@ -492,175 +492,182 @@ export default function RideDetailsPage({ params }: { params: Promise<{ id: stri
 
         {/* Booking Confirmation Dialog */}
         {showBookingDialog && (
-          <div className="fixed inset-0 z-50 flex items-end justify-center">
+          <div className="fixed inset-0 z-50 flex items-end">
             {/* Backdrop */}
             <div 
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/60"
               onClick={() => !isBooking && !bookingSuccess && setShowBookingDialog(false)}
             />
             
-            {/* Dialog Content */}
-            <div className="relative bg-background rounded-t-3xl w-full max-w-md p-6 pb-8 animate-in slide-in-from-bottom duration-300">
-              {/* Close Button */}
-              {!isBooking && !bookingSuccess && (
-                <button 
-                  onClick={() => setShowBookingDialog(false)}
-                  className="absolute top-4 right-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
+            {/* Dialog Content - Full width bottom sheet */}
+            <div className="relative bg-background rounded-t-[2rem] w-full max-h-[85dvh] overflow-auto animate-in slide-in-from-bottom duration-300">
+              {/* Handle bar */}
+              <div className="sticky top-0 bg-background pt-3 pb-2 z-10">
+                <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full mx-auto" />
+              </div>
               
-              {bookingSuccess ? (
-                /* Success State */
-                <div className="text-center py-8">
-                  <div className="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 className="w-10 h-10 text-emerald-500" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Muvaffaqiyatli!</h3>
-                  <p className="text-muted-foreground mb-2">
-                    Safar muvaffaqiyatli band qilindi
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Haydovchi tez orada siz bilan bog'lanadi
-                  </p>
-                </div>
-              ) : (
-                /* Booking Form */
-                <>
-                  <h3 className="text-xl font-bold text-foreground mb-1">Band qilishni tasdiqlash</h3>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    {ride.from} - {ride.to}, {ride.date} {ride.time}
-                  </p>
-                  
-                  {/* Seats Selection */}
-                  <div className="mb-6">
-                    <label className="text-sm font-medium text-foreground mb-3 block">
-                      Nechta joy band qilasiz?
-                    </label>
-                    <div className="flex items-center justify-between bg-muted/50 rounded-2xl p-4">
-                      <button
-                        onClick={() => setSelectedSeats(Math.max(1, selectedSeats - 1))}
-                        disabled={selectedSeats <= 1 || isBooking}
-                        className="w-10 h-10 rounded-xl bg-background shadow-sm flex items-center justify-center disabled:opacity-50"
-                      >
-                        <Minus className="w-5 h-5" />
-                      </button>
-                      <div className="text-center">
-                        <span className="text-3xl font-bold text-foreground">{selectedSeats}</span>
-                        <p className="text-xs text-muted-foreground">joy</p>
-                      </div>
-                      <button
-                        onClick={() => setSelectedSeats(Math.min(ride.seatsAvailable, selectedSeats + 1))}
-                        disabled={selectedSeats >= ride.seatsAvailable || isBooking}
-                        className="w-10 h-10 rounded-xl bg-background shadow-sm flex items-center justify-center disabled:opacity-50"
-                      >
-                        <Plus className="w-5 h-5" />
-                      </button>
+              <div className="px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
+                {/* Close Button */}
+                {!isBooking && !bookingSuccess && (
+                  <button 
+                    onClick={() => setShowBookingDialog(false)}
+                    className="absolute top-3 right-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center active:scale-95"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+                
+                {bookingSuccess ? (
+                  /* Success State */
+                  <div className="text-center py-6">
+                    <div className="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-3">
+                      <CheckCircle2 className="w-8 h-8 text-emerald-500" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2 text-center">
-                      Mavjud: {ride.seatsAvailable} ta bo'sh joy
+                    <h3 className="text-lg font-bold text-foreground mb-1">Muvaffaqiyatli!</h3>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      Safar muvaffaqiyatli band qilindi
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Haydovchi tez orada siz bilan bog'lanadi
                     </p>
                   </div>
-                  
-                  {/* Payment Method */}
-                  <div className="mb-6">
-                    <label className="text-sm font-medium text-foreground mb-3 block">
-                      To'lov usuli
-                    </label>
-                    <div className="grid grid-cols-2 gap-3">
-                      <button
-                        onClick={() => setPaymentMethod("cash")}
-                        disabled={isBooking}
-                        className={`p-4 rounded-2xl border-2 transition-all ${
-                          paymentMethod === "cash" 
-                            ? "border-emerald-500 bg-emerald-500/5" 
-                            : "border-border bg-background"
-                        }`}
-                      >
-                        <Banknote className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === "cash" ? "text-emerald-500" : "text-muted-foreground"}`} />
-                        <p className={`text-sm font-medium ${paymentMethod === "cash" ? "text-emerald-500" : "text-foreground"}`}>Naqd</p>
-                      </button>
-                      <button
-                        onClick={() => setPaymentMethod("card")}
-                        disabled={isBooking}
-                        className={`p-4 rounded-2xl border-2 transition-all ${
-                          paymentMethod === "card" 
-                            ? "border-emerald-500 bg-emerald-500/5" 
-                            : "border-border bg-background"
-                        }`}
-                      >
-                        <Wallet className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === "card" ? "text-emerald-500" : "text-muted-foreground"}`} />
-                        <p className={`text-sm font-medium ${paymentMethod === "card" ? "text-emerald-500" : "text-foreground"}`}>Karta</p>
-                      </button>
+                ) : (
+                  /* Booking Form */
+                  <>
+                    <h3 className="text-lg font-bold text-foreground mb-0.5">Band qilishni tasdiqlash</h3>
+                    <p className="text-xs text-muted-foreground mb-4">
+                      {ride.from} - {ride.to}, {ride.date} {ride.time}
+                    </p>
+                    
+                    {/* Seats Selection */}
+                    <div className="mb-4">
+                      <label className="text-sm font-medium text-foreground mb-2 block">
+                        Nechta joy band qilasiz?
+                      </label>
+                      <div className="flex items-center justify-between bg-muted/50 rounded-xl p-3">
+                        <button
+                          onClick={() => setSelectedSeats(Math.max(1, selectedSeats - 1))}
+                          disabled={selectedSeats <= 1 || isBooking}
+                          className="w-11 h-11 rounded-xl bg-background shadow-sm flex items-center justify-center disabled:opacity-50 active:scale-95"
+                        >
+                          <Minus className="w-5 h-5" />
+                        </button>
+                        <div className="text-center">
+                          <span className="text-2xl font-bold text-foreground">{selectedSeats}</span>
+                          <p className="text-[10px] text-muted-foreground">joy</p>
+                        </div>
+                        <button
+                          onClick={() => setSelectedSeats(Math.min(ride.seatsAvailable, selectedSeats + 1))}
+                          disabled={selectedSeats >= ride.seatsAvailable || isBooking}
+                          className="w-11 h-11 rounded-xl bg-background shadow-sm flex items-center justify-center disabled:opacity-50 active:scale-95"
+                        >
+                          <Plus className="w-5 h-5" />
+                        </button>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground mt-1.5 text-center">
+                        Mavjud: {ride.seatsAvailable} ta bo'sh joy
+                      </p>
                     </div>
-                  </div>
-                  
-                  {/* Price Summary */}
-                  <div className="bg-muted/50 rounded-2xl p-4 mb-6">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">Narx ({selectedSeats} joy)</span>
-                      <span className="font-medium">{(ride.price * selectedSeats).toLocaleString()} so'm</span>
+                    
+                    {/* Payment Method */}
+                    <div className="mb-4">
+                      <label className="text-sm font-medium text-foreground mb-2 block">
+                        To'lov usuli
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          onClick={() => setPaymentMethod("cash")}
+                          disabled={isBooking}
+                          className={`p-3 rounded-xl border-2 transition-all active:scale-[0.98] ${
+                            paymentMethod === "cash" 
+                              ? "border-emerald-500 bg-emerald-500/5" 
+                              : "border-border bg-background"
+                          }`}
+                        >
+                          <Banknote className={`w-5 h-5 mx-auto mb-1 ${paymentMethod === "cash" ? "text-emerald-500" : "text-muted-foreground"}`} />
+                          <p className={`text-xs font-medium ${paymentMethod === "cash" ? "text-emerald-500" : "text-foreground"}`}>Naqd</p>
+                        </button>
+                        <button
+                          onClick={() => setPaymentMethod("card")}
+                          disabled={isBooking}
+                          className={`p-3 rounded-xl border-2 transition-all active:scale-[0.98] ${
+                            paymentMethod === "card" 
+                              ? "border-emerald-500 bg-emerald-500/5" 
+                              : "border-border bg-background"
+                          }`}
+                        >
+                          <Wallet className={`w-5 h-5 mx-auto mb-1 ${paymentMethod === "card" ? "text-emerald-500" : "text-muted-foreground"}`} />
+                          <p className={`text-xs font-medium ${paymentMethod === "card" ? "text-emerald-500" : "text-foreground"}`}>Karta</p>
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between pt-2 border-t border-border">
-                      <span className="font-semibold">Jami</span>
-                      <span className="text-xl font-bold text-emerald-500">{totalPrice.toLocaleString()} so'm</span>
+                    
+                    {/* Price Summary */}
+                    <div className="bg-muted/50 rounded-xl p-3 mb-4">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs text-muted-foreground">Narx ({selectedSeats} joy)</span>
+                        <span className="text-sm font-medium">{(ride.price * selectedSeats).toLocaleString()} so'm</span>
+                      </div>
+                      <div className="flex items-center justify-between pt-1.5 border-t border-border">
+                        <span className="text-sm font-semibold">Jami</span>
+                        <span className="text-lg font-bold text-emerald-500">{totalPrice.toLocaleString()} so'm</span>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Confirm Button */}
-                  <Button 
-                    onClick={handleBooking}
-                    disabled={isBooking}
-                    className="w-full h-14 rounded-2xl bg-emerald-500 hover:bg-emerald-500/90 text-base font-semibold"
-                  >
-                    {isBooking ? (
-                      <span className="flex items-center gap-2">
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Band qilinmoqda...
-                      </span>
-                    ) : (
-                      `Tasdiqlash - ${totalPrice.toLocaleString()} so'm`
-                    )}
-                  </Button>
-                  
-                  {/* Cancel hint */}
-                  <p className="text-xs text-muted-foreground text-center mt-3">
-                    Bekor qilish 24 soat oldin bepul
-                  </p>
-                </>
-              )}
+                    
+                    {/* Confirm Button */}
+                    <Button 
+                      onClick={handleBooking}
+                      disabled={isBooking}
+                      className="w-full h-12 rounded-xl bg-emerald-500 active:bg-emerald-600 text-sm font-semibold"
+                    >
+                      {isBooking ? (
+                        <span className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Band qilinmoqda...
+                        </span>
+                      ) : (
+                        `Tasdiqlash - ${totalPrice.toLocaleString()} so'm`
+                      )}
+                    </Button>
+                    
+                    {/* Cancel hint */}
+                    <p className="text-[10px] text-muted-foreground text-center mt-2">
+                      Bekor qilish 24 soat oldin bepul
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}
 
         {/* Cancel Booking Dialog */}
         {showCancelDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
             <div 
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/60"
               onClick={() => setShowCancelDialog(false)}
             />
-            <div className="relative bg-background rounded-3xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200">
+            <div className="relative bg-background rounded-2xl w-full p-5 animate-in zoom-in-95 duration-200">
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
-                  <AlertCircle className="w-8 h-8 text-red-500" />
+                <div className="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-3">
+                  <AlertCircle className="w-7 h-7 text-red-500" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Bekor qilishni tasdiqlang</h3>
-                <p className="text-sm text-muted-foreground mb-6">
+                <h3 className="text-base font-bold text-foreground mb-1">Bekor qilishni tasdiqlang</h3>
+                <p className="text-xs text-muted-foreground mb-5">
                   Haqiqatan ham bu safarni bekor qilmoqchimisiz?
                 </p>
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                   <Button 
                     variant="outline" 
                     onClick={() => setShowCancelDialog(false)}
-                    className="flex-1 h-12 rounded-xl"
+                    className="flex-1 h-11 rounded-xl active:scale-[0.98]"
                   >
                     Yo'q
                   </Button>
                   <Button 
                     onClick={handleCancelBooking}
-                    className="flex-1 h-12 rounded-xl bg-red-500 hover:bg-red-500/90"
+                    className="flex-1 h-11 rounded-xl bg-red-500 active:bg-red-600"
                   >
                     Ha, bekor qilish
                   </Button>
