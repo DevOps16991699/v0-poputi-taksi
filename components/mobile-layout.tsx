@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Search, User, Plus, MapPin, Car } from "lucide-react"
+import { Home, Search, User, Plus, MapPin, Car, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -20,7 +20,7 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
   // Haydovchi uchun navigatsiya
   const driverLeftNavItems = [
     { href: "/", icon: Home, label: "Asosiy" },
-    { href: "/driver", icon: Car, label: "E'lon" },
+    { href: "/chat", icon: MessageCircle, label: "Chat" },
   ]
   
   const driverRightNavItems = [
@@ -35,13 +35,13 @@ export function MobileLayout({ children, showNavigation = true, lockScroll = fal
   ]
   
   const passengerRightNavItems = [
-    { href: "/rides", icon: MapPin, label: "Safarlar" },
+    { href: "/chat", icon: MessageCircle, label: "Chat" },
     { href: "/profile", icon: User, label: "Profil" },
   ]
 
   const leftNavItems = role === "driver" ? driverLeftNavItems : passengerLeftNavItems
   const rightNavItems = role === "driver" ? driverRightNavItems : passengerRightNavItems
-  const centerHref = role === "driver" ? "/driver" : "/rides"
+  const centerHref = role === "driver" ? "/driver" : "/search"
 
   return (
     <div className="min-h-screen bg-muted flex items-center justify-center p-4">
