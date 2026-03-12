@@ -83,13 +83,13 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
       {/* Main content */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-xs px-6">
         
-        {/* Logo */}
+        {/* Logo - driver at home image */}
         <div className={cn(
           "transition-all duration-700 flex flex-col items-center",
           step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <div 
-            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-2 overflow-hidden"
+            className="w-24 h-24 rounded-2xl flex items-center justify-center overflow-hidden"
             style={{ 
               background: "rgba(255,255,255,0.1)",
               backdropFilter: "blur(10px)",
@@ -97,16 +97,16 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
             }}
           >
             <img 
-              src="/images/poputi-logo.jpg" 
+              src="/images/driver-at-home.png" 
               alt="Poputi Taksi" 
-              className="w-16 h-16 object-contain"
+              className="w-full h-full object-cover"
               style={{ 
-                filter: "brightness(1.2) contrast(1.1)",
-                mixBlendMode: "screen",
-                opacity: 0.9
+                filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+                opacity: 0.95
               }}
             />
           </div>
+          <p className="text-white/80 text-xs font-medium mt-2">Poputi Taksi</p>
         </div>
 
         {/* Animation Scene */}
@@ -115,39 +115,35 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
           style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)" }}
         >
           
-          {/* Step 1: Haydovchi uyda - haqiqiy rasm */}
+          {/* Step 1: Haydovchi uyda - logo rasm */}
           <div className={cn(
             "absolute inset-0 flex flex-col items-center justify-center transition-all duration-700",
             step === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
           )}>
-            {/* Real image */}
+            {/* Poputi Logo */}
             <div 
-              className="relative w-full h-40 overflow-hidden rounded-xl"
+              className="relative w-28 h-28 overflow-hidden rounded-2xl mb-4"
               style={{ 
-                boxShadow: "0 0 30px rgba(59,130,246,0.3), 0 0 60px rgba(16,185,129,0.2)"
+                boxShadow: "0 0 40px rgba(59,130,246,0.4), 0 0 60px rgba(16,185,129,0.3)",
+                background: "rgba(255,255,255,0.1)",
+                backdropFilter: "blur(10px)"
               }}
             >
               <img 
-                src="/images/driver-at-home.png" 
-                alt="Haydovchi uyda" 
-                className="w-full h-full object-cover"
+                src="/images/poputi-logo.jpg" 
+                alt="Poputi Taksi Logo" 
+                className="w-full h-full object-contain p-2"
                 style={{ 
-                  filter: "brightness(0.9) contrast(1.1) saturate(1.1)",
+                  filter: "brightness(1.2) contrast(1.1)",
+                  mixBlendMode: "screen",
                   opacity: 0.95
                 }}
               />
-              {/* Overlay gradient */}
-              <div 
-                className="absolute inset-0"
-                style={{ 
-                  background: "linear-gradient(to top, rgba(12,25,41,0.8) 0%, transparent 50%, rgba(12,25,41,0.3) 100%)"
-                }}
-              />
-              {/* Text overlay */}
-              <div className="absolute bottom-3 left-0 right-0 text-center">
-                <p className="text-white/90 text-xs font-medium">Haydovchi uyda turib e'lon joylashtiryapti</p>
-              </div>
             </div>
+            
+            {/* Text */}
+            <p className="text-white/90 text-sm font-medium">Haydovchi uyda turib e'lon joylashtiryapti</p>
+            <p className="text-white/50 text-xs mt-1">Oson va qulay</p>
           </div>
 
           {/* Step 2: E'lon joylashtirildi */}
