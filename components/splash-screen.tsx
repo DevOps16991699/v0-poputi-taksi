@@ -9,279 +9,21 @@ interface SplashScreenProps {
   onDisableAd?: () => void
 }
 
-// Shaffof porlovchi odam silueti - inline styles bilan
-function GlowingPerson({ 
-  className, 
-  variant = "standing",
-  color = "blue"
-}: { 
-  className?: string
-  variant?: "standing" | "sitting" | "walking" | "waving"
-  color?: "blue" | "green" | "white"
-}) {
-  const colors = {
-    blue: { fill: "rgba(59, 130, 246, 0.8)", glow: "rgba(59, 130, 246, 0.5)" },
-    green: { fill: "rgba(52, 211, 153, 0.8)", glow: "rgba(52, 211, 153, 0.5)" },
-    white: { fill: "rgba(255, 255, 255, 0.8)", glow: "rgba(255, 255, 255, 0.5)" }
-  }
-
-  const { fill, glow } = colors[color]
-
-  return (
-    <div className={cn("relative", className)}>
-      {/* Glow effect */}
-      <div 
-        className="absolute inset-0 rounded-full blur-xl opacity-60"
-        style={{ background: `radial-gradient(circle, ${glow} 0%, transparent 70%)` }}
-      />
-      
-      {/* Person silhouette */}
-      <svg 
-        viewBox="0 0 40 80" 
-        className="relative w-full h-full"
-        style={{ 
-          fill: fill,
-          filter: `drop-shadow(0 0 12px ${glow})`
-        }}
-      >
-        {variant === "standing" && (
-          <>
-            <circle cx="20" cy="10" r="8" />
-            <path d="M12 20 L28 20 L26 45 L14 45 Z" />
-            <path d="M12 22 L4 35 L6 37 L14 28" />
-            <path d="M28 22 L36 35 L34 37 L26 28" />
-            <path d="M14 45 L12 75 L16 75 L18 50 L22 50 L24 75 L28 75 L26 45" />
-          </>
-        )}
-        {variant === "sitting" && (
-          <>
-            <circle cx="20" cy="10" r="8" />
-            <path d="M12 20 L28 20 L26 40 L14 40 Z" />
-            <path d="M14 25 L10 35 L18 38 L20 30" />
-            <path d="M26 25 L30 35 L22 38 L20 30" />
-            <path d="M14 40 L8 55 L12 55 L16 45 L24 45 L28 55 L32 55 L26 40" />
-          </>
-        )}
-        {variant === "walking" && (
-          <>
-            <circle cx="20" cy="10" r="8" />
-            <path d="M12 20 L28 20 L26 45 L14 45 Z" />
-            <path d="M12 22 L6 40 L9 41 L14 28" />
-            <path d="M28 22 L32 32 L29 33 L26 26" />
-            <path d="M14 45 L8 75 L12 75 L17 50" />
-            <path d="M26 45 L32 70 L28 70 L23 50" />
-          </>
-        )}
-        {variant === "waving" && (
-          <>
-            <circle cx="20" cy="10" r="8" />
-            <path d="M12 20 L28 20 L26 45 L14 45 Z" />
-            <path d="M12 22 L4 35 L6 37 L14 28" />
-            <path d="M28 22 L36 8 L38 10 L30 26" />
-            <path d="M14 45 L12 75 L16 75 L18 50 L22 50 L24 75 L28 75 L26 45" />
-          </>
-        )}
-      </svg>
-    </div>
-  )
-}
-
-// Uy komponenti
-function House({ className }: { className?: string }) {
-  return (
-    <div className={cn("relative", className)}>
-      <div 
-        className="absolute inset-0 rounded-xl blur-lg opacity-40"
-        style={{ background: "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)" }}
-      />
-      <svg viewBox="0 0 60 50" className="w-full h-full" style={{ filter: "drop-shadow(0 0 10px rgba(255,255,255,0.3))" }}>
-        {/* Roof */}
-        <path d="M5 25 L30 5 L55 25 Z" fill="rgba(255,255,255,0.6)" />
-        {/* House body */}
-        <rect x="10" y="25" width="40" height="25" fill="rgba(255,255,255,0.5)" rx="2" />
-        {/* Door */}
-        <rect x="25" y="35" width="10" height="15" fill="rgba(59,130,246,0.6)" rx="1" />
-        {/* Window */}
-        <rect x="15" y="30" width="8" height="8" fill="rgba(250,204,21,0.7)" rx="1" />
-        <rect x="37" y="30" width="8" height="8" fill="rgba(250,204,21,0.7)" rx="1" />
-      </svg>
-    </div>
-  )
-}
-
-// Telefon komponenti
-function PhoneWithApp({ 
-  className, 
-  screen
-}: { 
-  className?: string
-  screen: "home" | "posting" | "searching" | "booked" | "journey"
-}) {
-  return (
-    <div className={cn("relative", className)}>
-      {/* Phone glow */}
-      <div 
-        className="absolute inset-0 blur-xl opacity-50"
-        style={{ background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)" }}
-      />
-      
-      {/* Phone body */}
-      <div 
-        className="relative rounded-2xl p-1 shadow-2xl"
-        style={{ 
-          background: "linear-gradient(to bottom, #1e293b, #0f172a)",
-          boxShadow: "0 0 20px rgba(255,255,255,0.1), inset 0 0 0 1px rgba(255,255,255,0.1)"
-        }}
-      >
-        {/* Screen */}
-        <div 
-          className="relative rounded-xl overflow-hidden w-20 h-40"
-          style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.9), rgba(16,185,129,0.9))" }}
-        >
-          {/* Status bar */}
-          <div className="flex items-center justify-between px-2 py-1" style={{ background: "rgba(0,0,0,0.2)" }}>
-            <span className="text-white/80" style={{ fontSize: "6px" }}>9:41</span>
-            <div className="w-2 h-1.5 bg-white/80 rounded-sm" />
-          </div>
-          
-          {/* App content */}
-          <div className="p-2">
-            {screen === "home" && (
-              <div className="space-y-2">
-                <div className="text-white font-bold" style={{ fontSize: "6px" }}>Poputi Taksi</div>
-                <div className="flex gap-1">
-                  <div className="flex-1 h-6 bg-white/20 rounded-md" />
-                  <div className="flex-1 h-6 bg-white/20 rounded-md" />
-                </div>
-                <div className="h-4 bg-white/10 rounded-md" />
-              </div>
-            )}
-            
-            {screen === "posting" && (
-              <div className="space-y-1.5">
-                <div className="text-white font-bold" style={{ fontSize: "6px" }}>Yangi e'lon</div>
-                <div className="h-3 bg-white/30 rounded-sm flex items-center px-1">
-                  <span className="text-white/80" style={{ fontSize: "5px" }}>Toshkent</span>
-                </div>
-                <div className="h-3 bg-white/30 rounded-sm flex items-center px-1">
-                  <span className="text-white/80" style={{ fontSize: "5px" }}>Samarqand</span>
-                </div>
-                <div className="h-5 bg-white rounded-md flex items-center justify-center mt-2">
-                  <span className="font-bold" style={{ fontSize: "6px", color: "rgb(59, 130, 246)" }}>Joylash</span>
-                </div>
-              </div>
-            )}
-            
-            {screen === "searching" && (
-              <div className="space-y-1.5">
-                <div className="h-4 bg-white/30 rounded-md flex items-center px-1 gap-1">
-                  <div className="w-2 h-2 rounded-full bg-white/50 animate-pulse" />
-                  <span className="text-white/80" style={{ fontSize: "5px" }}>Qidirish...</span>
-                </div>
-                <div className="space-y-1">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-5 bg-white/15 rounded-md animate-pulse" style={{ animationDelay: `${i * 200}ms` }} />
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {screen === "booked" && (
-              <div className="flex flex-col items-center justify-center h-28">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center mb-2" style={{ background: "rgba(52,211,153,0.3)" }}>
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="rgb(52,211,153)" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <span className="text-white font-bold" style={{ fontSize: "7px" }}>Tasdiqlandi!</span>
-              </div>
-            )}
-            
-            {screen === "journey" && (
-              <div className="h-28 relative">
-                <div className="absolute inset-0 bg-emerald-900/30 rounded-md">
-                  <div className="absolute top-1/2 left-2 right-2 h-1 bg-white/40 rounded-full" />
-                  <div className="absolute top-1/2 -translate-y-1/2 left-1/2 w-4 h-2.5 bg-white rounded-sm animate-pulse" />
-                  <div className="absolute top-1/2 -translate-y-1/2 right-3 w-2 h-2 rounded-full" style={{ background: "rgb(52,211,153)" }} />
-                </div>
-                <div className="absolute bottom-1 left-0 right-0 text-center">
-                  <span className="text-white/80" style={{ fontSize: "5px" }}>15 daqiqa qoldi</span>
-                </div>
-              </div>
-            )}
-          </div>
-          
-          {/* Home indicator */}
-          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-white/50 rounded-full" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// Mashina komponenti
-function Car({ className, moving = false }: { className?: string; moving?: boolean }) {
-  return (
-    <div className={cn("relative", className, moving && "animate-pulse")}>
-      <div 
-        className="absolute inset-0 blur-lg opacity-50"
-        style={{ background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)" }}
-      />
-      <svg viewBox="0 0 60 30" className="w-full h-full" style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4))" }}>
-        {/* Car body */}
-        <path d="M10 20 L15 10 L45 10 L50 20 L50 25 L10 25 Z" fill="rgba(255,255,255,0.8)" />
-        {/* Windows */}
-        <path d="M17 12 L20 17 L40 17 L43 12 Z" fill="rgba(59,130,246,0.6)" />
-        {/* Wheels */}
-        <circle cx="18" cy="25" r="5" fill="rgba(30,41,59,0.9)" />
-        <circle cx="42" cy="25" r="5" fill="rgba(30,41,59,0.9)" />
-        <circle cx="18" cy="25" r="2" fill="rgba(255,255,255,0.5)" />
-        <circle cx="42" cy="25" r="2" fill="rgba(255,255,255,0.5)" />
-      </svg>
-    </div>
-  )
-}
-
-// Manzil markeri
-function LocationMarker({ className, active = false }: { className?: string; active?: boolean }) {
-  return (
-    <div className={cn("relative", className)}>
-      {active && (
-        <div 
-          className="absolute inset-0 blur-lg animate-pulse"
-          style={{ background: "radial-gradient(circle, rgba(52,211,153,0.6) 0%, transparent 70%)" }}
-        />
-      )}
-      <svg 
-        viewBox="0 0 24 24" 
-        className="w-full h-full"
-        style={{ 
-          fill: active ? "rgb(52,211,153)" : "rgba(255,255,255,0.4)",
-          filter: active ? "drop-shadow(0 0 10px rgba(52,211,153,0.6))" : "none"
-        }}
-      >
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-      </svg>
-    </div>
-  )
-}
-
 export function SplashScreen({ onComplete, showDisableOption = false, onDisableAd }: SplashScreenProps) {
   const [step, setStep] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStep(1), 500),
+      setTimeout(() => setStep(1), 300),
       setTimeout(() => setStep(2), 2000),
-      setTimeout(() => setStep(3), 3800),
-      setTimeout(() => setStep(4), 5500),
-      setTimeout(() => setStep(5), 7200),
-      setTimeout(() => setStep(6), 8800),
+      setTimeout(() => setStep(3), 4000),
+      setTimeout(() => setStep(4), 6000),
+      setTimeout(() => setStep(5), 8000),
       setTimeout(() => {
         setIsExiting(true)
-        setTimeout(onComplete, 600)
-      }, 10200),
+        setTimeout(onComplete, 500)
+      }, 10000),
     ]
 
     return () => timers.forEach(clearTimeout)
@@ -289,293 +31,344 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
 
   const handleSkip = () => {
     setIsExiting(true)
-    setTimeout(onComplete, 400)
+    setTimeout(onComplete, 300)
   }
-
-  const stepTitles = [
-    "",
-    "Haydovchi uyda...",
-    "E'lon joylashtirdi!",
-    "Yo'lovchi qidirmoqda...",
-    "Joy band qilindi!",
-    "Safar boshlandi!",
-    "Manzilga yetdi!"
-  ]
 
   return (
     <div 
       className={cn(
-        "fixed inset-0 z-[100] flex flex-col items-center justify-center transition-all duration-700",
-        isExiting && "opacity-0 scale-105"
+        "fixed inset-0 z-[100] flex flex-col items-center justify-center transition-all duration-500",
+        isExiting ? "opacity-0 scale-110" : "opacity-100 scale-100"
       )}
-      style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)" }}
+      style={{ background: "linear-gradient(135deg, #0c1929 0%, #1a365d 50%, #0c1929 100%)" }}
     >
-      {/* Background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full animate-pulse"
+            className="absolute w-1 h-1 bg-white/20 rounded-full"
             style={{
-              width: `${2 + Math.random() * 4}px`,
-              height: `${2 + Math.random() * 4}px`,
-              background: `rgba(255,255,255,${0.1 + Math.random() * 0.2})`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              animation: `pulse ${2 + Math.random() * 2}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`
             }}
           />
         ))}
-        
-        {/* Gradient orbs */}
-        <div 
-          className="absolute w-64 h-64 rounded-full blur-3xl animate-pulse"
-          style={{ 
-            top: "20%", 
-            left: "-10%",
-            background: "radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%)"
-          }}
-        />
-        <div 
-          className="absolute w-80 h-80 rounded-full blur-3xl animate-pulse"
-          style={{ 
-            bottom: "20%", 
-            right: "-10%",
-            background: "radial-gradient(circle, rgba(52,211,153,0.2) 0%, transparent 70%)",
-            animationDelay: "1s"
-          }}
-        />
       </div>
 
+      {/* Glowing orbs */}
+      <div 
+        className="absolute w-40 h-40 rounded-full opacity-30"
+        style={{
+          top: "10%",
+          left: "10%",
+          background: "radial-gradient(circle, rgba(59,130,246,0.6) 0%, transparent 70%)",
+          animation: "pulse 3s ease-in-out infinite"
+        }}
+      />
+      <div 
+        className="absolute w-60 h-60 rounded-full opacity-20"
+        style={{
+          bottom: "10%",
+          right: "5%",
+          background: "radial-gradient(circle, rgba(16,185,129,0.5) 0%, transparent 70%)",
+          animation: "pulse 4s ease-in-out infinite",
+          animationDelay: "1s"
+        }}
+      />
+
       {/* Main content */}
-      <div className="relative z-10 flex flex-col items-center px-6 w-full max-w-sm">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-xs px-6">
         
         {/* Logo */}
         <div className={cn(
-          "mb-4 transition-all duration-700 ease-out",
-          step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          "transition-all duration-700",
+          step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <div className="relative">
-            <div 
-              className="absolute inset-0 blur-2xl rounded-full"
-              style={{ background: "radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 70%)" }}
-            />
-            <div 
-              className="relative w-14 h-14 rounded-xl flex items-center justify-center shadow-xl"
-              style={{ 
-                background: "linear-gradient(135deg, rgb(59,130,246), rgb(16,185,129))",
-                boxShadow: "0 0 30px rgba(59,130,246,0.4)"
-              }}
-            >
-              <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path d="M8 17l4-4-4-4m5 8l4-4-4-4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+          <div 
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-3"
+            style={{ 
+              background: "linear-gradient(135deg, #3b82f6, #10b981)",
+              boxShadow: "0 0 40px rgba(59,130,246,0.5)"
+            }}
+          >
+            <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
           </div>
-          <h1 className="text-lg font-bold text-white text-center mt-2">Poputi Taksi</h1>
-        </div>
-
-        {/* Step title */}
-        <div className={cn(
-          "mb-4 h-6 transition-all duration-500",
-          step >= 1 ? "opacity-100" : "opacity-0"
-        )}>
-          <p className="text-white/70 text-sm text-center">{stepTitles[step]}</p>
+          <h1 className="text-xl font-bold text-white text-center">Poputi Taksi</h1>
         </div>
 
         {/* Animation Scene */}
-        <div className="relative w-full h-56 mb-4 rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+        <div 
+          className="w-full h-52 mt-6 rounded-2xl overflow-hidden relative"
+          style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)" }}
+        >
           
-          {/* Scene 1-2: Haydovchi uyda e'lon joylashtiryapti */}
+          {/* Step 1: Haydovchi uyda */}
           <div className={cn(
-            "absolute inset-0 flex items-center justify-center gap-4 p-4 transition-all duration-700",
-            step >= 1 && step <= 2 ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
+            "absolute inset-0 flex items-center justify-center gap-6 p-4 transition-all duration-700",
+            step === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
           )}>
             {/* Uy */}
-            <House className={cn(
-              "w-16 h-14 transition-all duration-500",
-              step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )} />
+            <svg viewBox="0 0 80 70" className="w-20 h-20" style={{ filter: "drop-shadow(0 0 15px rgba(255,255,255,0.3))" }}>
+              <path d="M10 35 L40 10 L70 35" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="3" strokeLinecap="round"/>
+              <rect x="18" y="35" width="44" height="30" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" strokeWidth="2" rx="2"/>
+              <rect x="34" y="45" width="12" height="20" fill="rgba(59,130,246,0.5)" rx="1"/>
+              <rect x="24" y="42" width="8" height="8" fill="rgba(250,204,21,0.6)" rx="1"/>
+              <rect x="48" y="42" width="8" height="8" fill="rgba(250,204,21,0.6)" rx="1"/>
+            </svg>
             
             {/* Haydovchi */}
-            <GlowingPerson 
-              variant="sitting" 
-              color="blue"
-              className={cn(
-                "w-10 h-20 transition-all duration-500 delay-200",
-                step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            />
+            <svg viewBox="0 0 50 100" className="w-12 h-24" style={{ filter: "drop-shadow(0 0 20px rgba(59,130,246,0.5))" }}>
+              <defs>
+                <linearGradient id="personGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(59,130,246,0.9)"/>
+                  <stop offset="100%" stopColor="rgba(59,130,246,0.5)"/>
+                </linearGradient>
+              </defs>
+              <circle cx="25" cy="15" r="12" fill="url(#personGrad1)"/>
+              <path d="M15 30 L35 30 L32 60 L18 60 Z" fill="url(#personGrad1)"/>
+              <path d="M18 60 L15 95 L22 95 L24 65 L26 65 L28 95 L35 95 L32 60" fill="url(#personGrad1)"/>
+              <path d="M15 35 L5 50 L8 52 L18 40" fill="url(#personGrad1)"/>
+              <path d="M35 35 L40 45 L37 47 L32 40" fill="url(#personGrad1)"/>
+            </svg>
             
             {/* Telefon */}
-            <PhoneWithApp 
-              screen={step >= 2 ? "posting" : "home"}
-              className={cn(
-                "transition-all duration-500 delay-300",
-                step >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-75"
-              )}
-            />
-            
-            {/* E'lon joylandi badge */}
-            {step >= 2 && (
-              <div 
-                className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-white text-xs font-semibold flex items-center gap-1.5 animate-pulse"
-                style={{ 
-                  background: "linear-gradient(135deg, rgb(52,211,153), rgb(16,185,129))",
-                  boxShadow: "0 4px 15px rgba(52,211,153,0.4)"
-                }}
-              >
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                E'lon joylandi!
+            <div 
+              className="w-14 h-28 rounded-xl p-0.5"
+              style={{ 
+                background: "linear-gradient(180deg, #374151, #1f2937)",
+                boxShadow: "0 0 20px rgba(255,255,255,0.2)"
+              }}
+            >
+              <div className="w-full h-full rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex flex-col p-1.5">
+                <div className="text-white text-center" style={{ fontSize: "5px" }}>Poputi</div>
+                <div className="flex-1 flex flex-col gap-0.5 mt-1">
+                  <div className="h-2 bg-white/30 rounded-sm"/>
+                  <div className="h-2 bg-white/30 rounded-sm"/>
+                </div>
               </div>
-            )}
+            </div>
+            
+            <p className="absolute bottom-3 text-white/70 text-xs">Haydovchi uyda...</p>
           </div>
 
-          {/* Scene 3-4: Yo'lovchi qidirmoqda va band qilmoqda */}
+          {/* Step 2: E'lon joylashtirildi */}
           <div className={cn(
-            "absolute inset-0 flex items-center justify-center gap-4 p-4 transition-all duration-700",
-            step >= 3 && step <= 4 ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
+            "absolute inset-0 flex flex-col items-center justify-center p-4 transition-all duration-700",
+            step === 2 ? "opacity-100" : "opacity-0 pointer-events-none"
+          )}>
+            {/* Telefon katta */}
+            <div 
+              className="w-20 h-36 rounded-2xl p-1"
+              style={{ 
+                background: "linear-gradient(180deg, #374151, #1f2937)",
+                boxShadow: "0 0 30px rgba(59,130,246,0.4)"
+              }}
+            >
+              <div className="w-full h-full rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex flex-col p-2">
+                <div className="text-white font-bold text-center" style={{ fontSize: "7px" }}>Yangi e'lon</div>
+                <div className="flex-1 flex flex-col gap-1 mt-2">
+                  <div className="h-4 bg-white/30 rounded-md flex items-center px-1">
+                    <span className="text-white" style={{ fontSize: "5px" }}>Toshkent</span>
+                  </div>
+                  <div className="h-4 bg-white/30 rounded-md flex items-center px-1">
+                    <span className="text-white" style={{ fontSize: "5px" }}>Samarqand</span>
+                  </div>
+                  <div className="h-5 bg-white rounded-md flex items-center justify-center mt-1">
+                    <span className="text-blue-600 font-bold" style={{ fontSize: "6px" }}>Joylash</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Success badge */}
+            <div 
+              className="mt-3 px-3 py-1.5 rounded-full flex items-center gap-1.5"
+              style={{ 
+                background: "linear-gradient(135deg, #10b981, #059669)",
+                boxShadow: "0 0 20px rgba(16,185,129,0.5)",
+                animation: "pulse 2s ease-in-out infinite"
+              }}
+            >
+              <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span className="text-white text-xs font-semibold">E'lon joylandi!</span>
+            </div>
+          </div>
+
+          {/* Step 3: Yo'lovchi qidirmoqda */}
+          <div className={cn(
+            "absolute inset-0 flex items-center justify-center gap-6 p-4 transition-all duration-700",
+            step === 3 ? "opacity-100" : "opacity-0 pointer-events-none"
           )}>
             {/* Yo'lovchi */}
-            <GlowingPerson 
-              variant="standing" 
-              color="green"
-              className={cn(
-                "w-10 h-20 transition-all duration-500",
-                step >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            />
+            <svg viewBox="0 0 50 100" className="w-12 h-24" style={{ filter: "drop-shadow(0 0 20px rgba(16,185,129,0.5))" }}>
+              <defs>
+                <linearGradient id="personGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(16,185,129,0.9)"/>
+                  <stop offset="100%" stopColor="rgba(16,185,129,0.5)"/>
+                </linearGradient>
+              </defs>
+              <circle cx="25" cy="15" r="12" fill="url(#personGrad2)"/>
+              <path d="M15 30 L35 30 L32 60 L18 60 Z" fill="url(#personGrad2)"/>
+              <path d="M18 60 L15 95 L22 95 L24 65 L26 65 L28 95 L35 95 L32 60" fill="url(#personGrad2)"/>
+              <path d="M15 35 L5 50 L8 52 L18 40" fill="url(#personGrad2)"/>
+              <path d="M35 35 L45 50 L42 52 L32 40" fill="url(#personGrad2)"/>
+            </svg>
             
-            {/* Telefon */}
-            <PhoneWithApp 
-              screen={step >= 4 ? "booked" : "searching"}
-              className={cn(
-                "transition-all duration-500 delay-200",
-                step >= 3 ? "opacity-100 scale-100" : "opacity-0 scale-75"
-              )}
-            />
-            
-            {/* Band qilindi badge */}
-            {step >= 4 && (
-              <div 
-                className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-white text-xs font-semibold flex items-center gap-1.5 animate-pulse"
-                style={{ 
-                  background: "linear-gradient(135deg, rgb(59,130,246), rgb(37,99,235))",
-                  boxShadow: "0 4px 15px rgba(59,130,246,0.4)"
-                }}
-              >
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Joy band qilindi!
+            {/* Telefon qidirish */}
+            <div 
+              className="w-20 h-36 rounded-2xl p-1"
+              style={{ 
+                background: "linear-gradient(180deg, #374151, #1f2937)",
+                boxShadow: "0 0 30px rgba(16,185,129,0.4)"
+              }}
+            >
+              <div className="w-full h-full rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-400 flex flex-col p-2">
+                <div className="h-5 bg-white/30 rounded-md flex items-center gap-1 px-1">
+                  <div className="w-2 h-2 bg-white/70 rounded-full" style={{ animation: "pulse 1s ease-in-out infinite" }}/>
+                  <span className="text-white" style={{ fontSize: "6px" }}>Qidirish...</span>
+                </div>
+                <div className="flex-1 flex flex-col gap-1 mt-2">
+                  {[1,2,3].map(i => (
+                    <div 
+                      key={i} 
+                      className="h-4 bg-white/20 rounded-md"
+                      style={{ animation: "pulse 1.5s ease-in-out infinite", animationDelay: `${i * 0.2}s` }}
+                    />
+                  ))}
+                </div>
               </div>
-            )}
+            </div>
+            
+            <p className="absolute bottom-3 text-white/70 text-xs">Yo'lovchi qidirmoqda...</p>
           </div>
 
-          {/* Scene 5-6: Safar va manzilga yetish */}
+          {/* Step 4: Joy band qilindi */}
           <div className={cn(
-            "absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-700",
-            step >= 5 ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
+            "absolute inset-0 flex flex-col items-center justify-center p-4 transition-all duration-700",
+            step === 4 ? "opacity-100" : "opacity-0 pointer-events-none"
           )}>
-            {/* Road */}
-            <div className="relative w-full h-3 bg-white/10 rounded-full mb-6 overflow-hidden">
-              <div 
-                className="absolute inset-y-0 left-0 rounded-full transition-all ease-out"
-                style={{ 
-                  width: step >= 6 ? "100%" : "0%",
-                  background: "linear-gradient(90deg, rgb(59,130,246), rgb(52,211,153))",
-                  transitionDuration: "2s"
-                }}
-              />
-              {/* Dashed line */}
-              <div className="absolute inset-0 flex items-center justify-around">
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-4 h-0.5 bg-white/20 rounded-full" />
-                ))}
-              </div>
-            </div>
-
-            {/* Mashina va manzil */}
-            <div className="relative w-full flex items-center justify-between">
-              {/* Mashina */}
-              <div 
-                className="transition-all ease-out flex items-center gap-2"
-                style={{ 
-                  transform: step >= 6 ? "translateX(calc(100% - 4rem))" : "translateX(0)",
-                  transitionDuration: "2s"
-                }}
-              >
-                <Car className="w-14 h-8" moving={step >= 5 && step < 6} />
-                
-                {/* Yo'lovchilar */}
-                <div className="flex -ml-8 gap-0.5">
-                  <div 
-                    className="w-3 h-3 rounded-full"
-                    style={{ 
-                      background: "rgba(59,130,246,0.8)",
-                      boxShadow: "0 0 8px rgba(59,130,246,0.5)"
-                    }}
-                  />
-                  <div 
-                    className="w-3 h-3 rounded-full"
-                    style={{ 
-                      background: "rgba(52,211,153,0.8)",
-                      boxShadow: "0 0 8px rgba(52,211,153,0.5)"
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Manzil */}
-              <LocationMarker className="w-8 h-8 absolute right-0" active={step >= 6} />
-            </div>
-
-            {/* Yetdi celebration */}
-            {step >= 6 && (
-              <div className="mt-6 flex items-center gap-3">
-                <GlowingPerson variant="waving" color="blue" className="w-6 h-12" />
-                
+            {/* Telefon tasdiqlash */}
+            <div 
+              className="w-20 h-36 rounded-2xl p-1"
+              style={{ 
+                background: "linear-gradient(180deg, #374151, #1f2937)",
+                boxShadow: "0 0 30px rgba(59,130,246,0.4)"
+              }}
+            >
+              <div className="w-full h-full rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex flex-col items-center justify-center">
                 <div 
-                  className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={{ 
-                    background: "linear-gradient(135deg, rgb(52,211,153), rgb(16,185,129))",
-                    boxShadow: "0 0 20px rgba(52,211,153,0.5)"
-                  }}
+                  className="w-12 h-12 rounded-full flex items-center justify-center mb-2"
+                  style={{ background: "rgba(16,185,129,0.3)" }}
                 >
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#10b981" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                   </svg>
                 </div>
-                
-                <GlowingPerson variant="waving" color="green" className="w-6 h-12" />
+                <span className="text-white font-bold" style={{ fontSize: "8px" }}>Tasdiqlandi!</span>
               </div>
-            )}
+            </div>
+            
+            {/* Badge */}
+            <div 
+              className="mt-3 px-3 py-1.5 rounded-full flex items-center gap-1.5"
+              style={{ 
+                background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+                boxShadow: "0 0 20px rgba(59,130,246,0.5)",
+                animation: "pulse 2s ease-in-out infinite"
+              }}
+            >
+              <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span className="text-white text-xs font-semibold">Joy band qilindi!</span>
+            </div>
+          </div>
+
+          {/* Step 5: Safar - mashina harakatda */}
+          <div className={cn(
+            "absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-700",
+            step === 5 ? "opacity-100" : "opacity-0 pointer-events-none"
+          )}>
+            {/* Yo'l */}
+            <div className="w-full relative mb-4">
+              {/* Yo'l chizig'i */}
+              <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full"
+                  style={{ 
+                    width: "60%", 
+                    animation: "none",
+                    transition: "width 2s ease-out"
+                  }}
+                />
+              </div>
+              
+              {/* Mashina */}
+              <div 
+                className="absolute top-1/2 -translate-y-1/2"
+                style={{ 
+                  left: "50%",
+                  animation: "pulse 1s ease-in-out infinite"
+                }}
+              >
+                <svg viewBox="0 0 60 30" className="w-10 h-5" style={{ filter: "drop-shadow(0 0 10px rgba(255,255,255,0.5))" }}>
+                  <path d="M8 18 L12 8 L48 8 L52 18 L52 24 L8 24 Z" fill="rgba(255,255,255,0.9)"/>
+                  <path d="M15 10 L18 16 L42 16 L45 10 Z" fill="rgba(59,130,246,0.6)"/>
+                  <circle cx="16" cy="24" r="4" fill="#1e293b"/>
+                  <circle cx="44" cy="24" r="4" fill="#1e293b"/>
+                </svg>
+              </div>
+              
+              {/* Manzil markeri */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-2">
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="#10b981" style={{ filter: "drop-shadow(0 0 8px rgba(16,185,129,0.6))" }}>
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+            </div>
+            
+            {/* Haydovchi va yo'lovchi */}
+            <div className="flex items-center gap-4 mt-4">
+              <svg viewBox="0 0 50 100" className="w-8 h-16" style={{ filter: "drop-shadow(0 0 12px rgba(59,130,246,0.5))" }}>
+                <circle cx="25" cy="15" r="10" fill="rgba(59,130,246,0.8)"/>
+                <path d="M17 28 L33 28 L31 55 L19 55 Z" fill="rgba(59,130,246,0.8)"/>
+                <path d="M19 55 L17 85 L23 85 L25 60 L27 85 L33 85 L31 55" fill="rgba(59,130,246,0.8)"/>
+              </svg>
+              <svg viewBox="0 0 50 100" className="w-8 h-16" style={{ filter: "drop-shadow(0 0 12px rgba(16,185,129,0.5))" }}>
+                <circle cx="25" cy="15" r="10" fill="rgba(16,185,129,0.8)"/>
+                <path d="M17 28 L33 28 L31 55 L19 55 Z" fill="rgba(16,185,129,0.8)"/>
+                <path d="M19 55 L17 85 L23 85 L25 60 L27 85 L33 85 L31 55" fill="rgba(16,185,129,0.8)"/>
+              </svg>
+            </div>
+            
+            <p className="text-white/70 text-xs mt-2">Safar davom etmoqda...</p>
           </div>
         </div>
 
         {/* Progress dots */}
-        <div className="flex items-center gap-2 mb-4">
-          {[1, 2, 3, 4, 5, 6].map((s) => (
+        <div className="flex items-center gap-2 mt-4">
+          {[1, 2, 3, 4, 5].map((i) => (
             <div
-              key={s}
+              key={i}
               className={cn(
                 "w-2 h-2 rounded-full transition-all duration-300",
-                step >= s ? "scale-100" : "scale-75 opacity-50"
+                step >= i 
+                  ? "bg-white scale-100" 
+                  : "bg-white/30 scale-75"
               )}
-              style={{ 
-                background: step >= s 
-                  ? s <= 2 ? "rgb(59,130,246)" : s <= 4 ? "rgb(52,211,153)" : "rgb(250,204,21)"
-                  : "rgba(255,255,255,0.2)"
-              }}
             />
           ))}
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 mt-4">
           <button
             onClick={handleSkip}
             className="text-white/50 text-xs hover:text-white/80 transition-colors px-4 py-2"
@@ -589,8 +382,7 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
                 onDisableAd()
                 handleSkip()
               }}
-              className="text-white/30 hover:text-white/50 transition-colors px-4 py-1"
-              style={{ fontSize: "10px" }}
+              className="text-white/30 text-[10px] hover:text-white/50 transition-colors px-4 py-1"
             >
               Reklamani o'chirish
             </button>
