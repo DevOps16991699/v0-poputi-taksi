@@ -80,6 +80,70 @@ const passengerStats = [
   },
 ]
 
+// Yo'lovchi uchun mavjud safarlar (e'lonlar)
+const availableRides = [
+  {
+    id: 1,
+    driver: "Akbar R.",
+    from: "Toshkent",
+    to: "Samarqand",
+    time: "14:00",
+    date: "Bugun",
+    price: "80,000",
+    seats: 3,
+    car: "Cobalt",
+    rating: 4.8,
+  },
+  {
+    id: 2,
+    driver: "Dilshod K.",
+    from: "Toshkent",
+    to: "Buxoro",
+    time: "16:30",
+    date: "Bugun",
+    price: "120,000",
+    seats: 2,
+    car: "Gentra",
+    rating: 4.9,
+  },
+  {
+    id: 3,
+    driver: "Sardor A.",
+    from: "Toshkent",
+    to: "Farg'ona",
+    time: "08:00",
+    date: "Ertaga",
+    price: "100,000",
+    seats: 4,
+    car: "Lacetti",
+    rating: 4.7,
+  },
+  {
+    id: 4,
+    driver: "Bobur T.",
+    from: "Toshkent",
+    to: "Namangan",
+    time: "10:00",
+    date: "Ertaga",
+    price: "110,000",
+    seats: 1,
+    car: "Nexia",
+    rating: 4.6,
+  },
+  {
+    id: 5,
+    driver: "Jasur S.",
+    from: "Samarqand",
+    to: "Toshkent",
+    time: "18:00",
+    date: "Bugun",
+    price: "85,000",
+    seats: 2,
+    car: "Spark",
+    rating: 4.8,
+  },
+]
+
 export default function HomePage() {
   const { role } = useRole()
   
