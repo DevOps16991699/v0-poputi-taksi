@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { MobileLayout } from "@/components/mobile-layout"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +12,9 @@ import {
   Settings,
   LogOut,
   ChevronRight,
-  Edit2
+  Edit2,
+  Users,
+  Check
 } from "lucide-react"
 import Link from "next/link"
 
@@ -27,7 +30,30 @@ const menuItems = [
   { icon: Settings, label: "Sozlamalar", href: "/settings" },
 ]
 
+const roleOptions = [
+  {
+    id: "driver",
+    icon: Car,
+    label: "Haydovchi",
+    description: "E'lon joylash",
+    gradient: "from-primary to-primary/70",
+    shadow: "shadow-primary/30",
+    href: "/driver"
+  },
+  {
+    id: "passenger",
+    icon: Users,
+    label: "Yo'lovchi",
+    description: "Safar izlash",
+    gradient: "from-emerald-500 to-emerald-400",
+    shadow: "shadow-emerald-500/30",
+    href: "/rides"
+  },
+]
+
 export default function ProfilePage() {
+  const [selectedRole, setSelectedRole] = useState<string>("driver")
+
   return (
     <MobileLayout>
       <div className="flex flex-col min-h-full bg-linear-to-br from-primary/5 to-background">
@@ -57,8 +83,35 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* Role Selection - Compact Design */}
+        <div className="px-6 pt-16 pb-3">
+          <p className="text-xs font-medium text-muted-foreground mb-2">Foydalanuvchi turi</p>
+          <div className="bg-background rounded-2xl p-1.5 shadow-lg border border-border/50">
+            <div className="flex gap-1.5">
+              {roleOptions.map((role) => (
+                <Link
+                  key={role.id}
+                  href={role.href}
+                  onClick={() => setSelectedRole(role.id)}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl transition-all ${
+                    selectedRole === role.id
+                      ? `bg-linear-to-br ${role.gradient} text-white shadow-md ${role.shadow}`
+                      : "text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <role.icon className="w-4 h-4" />
+                  <span className="text-sm font-medium">{role.label}</span>
+                  {selectedRole === role.id && (
+                    <Check className="w-3.5 h-3.5" />
+                  )}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Stats */}
-        <div className="px-6 pt-16 pb-4">
+        <div className="px-6 pt-3 pb-4">
           <div className="grid grid-cols-3 gap-3">
             {userStats.map((stat) => (
               <div

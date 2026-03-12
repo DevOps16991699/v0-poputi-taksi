@@ -89,33 +89,6 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Role Selection */}
-          <div className="mb-6">
-            <h3 className="text-base font-semibold text-foreground mb-3">
-              Siz kim sifatida foydalanasiz?
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              <Link href="/driver" className="block">
-                <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50 hover:border-primary/50 hover:shadow-primary/10 transition-all text-center">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-linear-to-br from-primary to-primary/70 flex items-center justify-center mb-2 shadow-lg shadow-primary/30">
-                    <Car className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <p className="font-semibold text-foreground">Haydovchi</p>
-                  <p className="text-xs text-muted-foreground">E'lon joylash</p>
-                </div>
-              </Link>
-              <Link href="/rides" className="block">
-                <div className="bg-background rounded-2xl p-4 shadow-lg border border-border/50 hover:border-emerald-500/50 hover:shadow-emerald-500/10 transition-all text-center">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-linear-to-br from-emerald-500 to-emerald-400 flex items-center justify-center mb-2 shadow-lg shadow-emerald-500/30">
-                    <Users className="w-6 h-6 text-white" />
-                  </div>
-                  <p className="font-semibold text-foreground">Yo'lovchi</p>
-                  <p className="text-xs text-muted-foreground">Safar izlash</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-
           {/* Statistics */}
           <div className="mb-6">
             <h3 className="text-base font-semibold text-foreground mb-3">
