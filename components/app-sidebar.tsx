@@ -58,31 +58,38 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
       >
         {/* Sidebar Header */}
         <div className="pt-4 px-6 pb-5 bg-linear-to-br from-primary to-primary/80 flex-shrink-0">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Top row: Close button, Role badge, Logo */}
+          <div className="flex items-center justify-between">
+            <button
+              onClick={onClose}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            {/* Role Badge - Center */}
+            <span className={cn(
+              "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium",
+              role === "driver" 
+                ? "bg-primary-foreground/20 text-primary-foreground" 
+                : "bg-emerald-500/80 text-white"
+            )}>
+              {role === "driver" ? <Car className="w-3.5 h-3.5" /> : <Users className="w-3.5 h-3.5" />}
+              {role === "driver" ? "Haydovchi sifatida" : "Yo'lovchi sifatida"}
+            </span>
+            
+            {/* Logo placeholder for alignment */}
+            <div className="w-8 h-8" />
+          </div>
 
           {/* User Info */}
-          <div className="flex items-center gap-4 mt-6">
-            <div className="w-16 h-16 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-4 ring-primary-foreground/30">
-              <User className="w-8 h-8 text-primary-foreground" />
+          <div className="flex items-center gap-4 mt-5">
+            <div className="w-14 h-14 rounded-full bg-primary-foreground/20 flex items-center justify-center ring-4 ring-primary-foreground/30">
+              <User className="w-7 h-7 text-primary-foreground" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-primary-foreground">Jamshid Karimov</h3>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={cn(
-                  "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium",
-                  role === "driver" 
-                    ? "bg-primary-foreground/20 text-primary-foreground" 
-                    : "bg-emerald-500/80 text-white"
-                )}>
-                  {role === "driver" ? <Car className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                  {role === "driver" ? "Haydovchi" : "Yo'lovchi"}
-                </span>
-              </div>
+              <p className="text-sm text-primary-foreground/70">+998 90 123 45 67</p>
             </div>
           </div>
         </div>
