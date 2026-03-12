@@ -89,7 +89,7 @@ export function SplashScreen({ onComplete, showDisableOption = false, onDisableA
           step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <div 
-            className="w-24 h-24 rounded-2xl flex items-center justify-center overflow-hidden"
+            className="w-44 h-28 rounded-2xl flex items-center justify-center overflow-hidden"
             style={{ 
               background: "rgba(255,255,255,0.1)",
               backdropFilter: "blur(10px)",
