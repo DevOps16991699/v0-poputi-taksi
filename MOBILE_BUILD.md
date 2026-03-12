@@ -184,6 +184,48 @@ sdk.dir=/path/to/Android/Sdk
 - `AppIcon.appiconset/` ikonkalar
 - `Splash.imageset/` splash screen
 
+## Shared Folder Strukturasi
+
+Loyiha `shared/` papkasiga ega bo'lib, bu React Native ga o'tishni osonlashtiradi:
+
+```
+shared/
+├── types/          # TypeScript interfeyslari va tiplar
+│   └── index.ts
+├── constants/      # O'zgarmas qiymatlar (routes, cities, va h.k.)
+│   └── index.ts
+├── utils/          # Yordamchi funksiyalar (format, validate, filter)
+│   └── index.ts
+├── validation/     # Zod schemalar
+│   └── index.ts
+├── data/           # Mock data (development uchun)
+│   └── mock.ts
+└── index.ts        # Barrel export
+```
+
+### Import qilish
+
+```typescript
+// Barcha exportlarni import qilish
+import { Ride, formatPrice, mockRides, rideFormSchema } from '@shared'
+
+// Alohida import qilish
+import type { User, Ride } from '@shared/types'
+import { ROUTES, POPULAR_ROUTES } from '@shared/constants'
+import { formatPrice, filterRides } from '@shared/utils'
+import { loginSchema } from '@shared/validation'
+import { mockRides } from '@shared/data/mock'
+```
+
+### React Native ga o'tish
+
+Kelajakda React Native ga o'tmoqchi bo'lsangiz:
+
+1. `shared/` papkasini yangi React Native loyihaga nusxalang
+2. `@shared` path alias ni sozlang
+3. Platform-specific komponentlar (UI) ni qayta yozing
+4. Business logic va tiplar bir xil qoladi
+
 ## Qo'shimcha resurslar
 
 - [Capacitor Documentation](https://capacitorjs.com/docs)
