@@ -17,7 +17,7 @@ import {
   Users,
   TrendingUp,
 } from 'lucide-react-native';
-import { Avatar, Card, Badge } from '@/components/ui';
+import { Avatar, Card, Badge, FadeIn, SlideIn, ScalePress } from '@/components/ui';
 import { RideCard } from '@/components/RideCard';
 import { useAuthStore } from '@/stores/authStore';
 import { useRidesStore } from '@/stores/ridesStore';
@@ -80,6 +80,7 @@ export default function HomeScreen() {
       </View>
 
       {/* Role Switcher */}
+      <FadeIn delay={100}>
       <View style={styles.roleSwitcher}>
         <TouchableOpacity
           onPress={() => setRole('passenger')}
@@ -116,11 +117,12 @@ export default function HomeScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      </FadeIn>
 
       {/* Quick Action Card */}
-      <Card style={styles.actionCard} onPress={() => 
-        isDriver ? router.push('/create') : router.push('/search')
-      }>
+      <SlideIn delay={200} direction="up">
+      <ScalePress onPress={() => isDriver ? router.push('/create') : router.push('/search')}>
+      <Card style={styles.actionCard}>
         <View style={styles.actionContent}>
           <View style={styles.actionIcon}>
             {isDriver ? (
@@ -142,6 +144,8 @@ export default function HomeScreen() {
           <ChevronRight size={24} color={COLORS.gray400} />
         </View>
       </Card>
+      </ScalePress>
+      </SlideIn>
 
       {/* Popular Routes */}
       <View style={styles.section}>

@@ -5,3 +5,4 @@ export { Avatar } from './Avatar';
 export { Badge } from './Badge';
 export { Divider } from './Divider';
 export { BottomSheet } from './BottomSheet';
+export { FadeIn, SlideIn, ScalePress, StaggeredList, Pulse, Shake } from './Animated';

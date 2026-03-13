@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
   MapPin,
@@ -22,6 +22,25 @@ interface RideCardProps {
 
 export function RideCard({ ride, variant = 'default' }: RideCardProps) {
   const router = useRouter();
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.98,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 4,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 4,
+    }).start();
+  };
 
   const handlePress = () => {
     router.push(`/ride/${ride.id}`);
@@ -64,9 +83,11 @@ export function RideCard({ ride, variant = 'default' }: RideCardProps) {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      activeOpacity={0.7}
-      style={styles.card}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      activeOpacity={1}
     >
+    <Animated.View style={[styles.card, { transform: [{ scale: scaleAnim }] }]}>
       {/* Route Section */}
       <View style={styles.routeSection}>
         <View style={styles.routeVisual}>
@@ -127,6 +148,7 @@ export function RideCard({ ride, variant = 'default' }: RideCardProps) {
           )}
         </View>
       </View>
+    </Animated.View>
     </TouchableOpacity>
   );
 }
