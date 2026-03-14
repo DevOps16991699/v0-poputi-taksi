@@ -143,3 +143,13 @@ export const ANIMATION = {
   normal: 300,
   slow: 500,
 };
+
+// Aliases for compatibility
+export const Colors = COLORS;
+export const Spacing = SPACING;
+export const FontSizes = FONT_SIZE;
+export const FontWeight = FONT_WEIGHT;
+export const BorderRadius = BORDER_RADIUS;
+export const Shadow = SHADOW;
+export const Animation = ANIMATION;
+

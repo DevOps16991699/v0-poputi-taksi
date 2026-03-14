@@ -7,9 +7,9 @@ This project is fully configured and optimized for **Expo SDK 54** with React Na
 
 ### Core Dependencies
 - **Expo SDK**: 54.0.0
-- **React Native**: 0.85.0
-- **React**: 18.3.1
-- **React Router**: 4.0.0
+- **React Native**: 0.81.5
+- **React**: 19.1.0
+- **React Router**: 6.0.23
 
 ### Expo Modules
 All expo modules are compatible with SDK 54:
@@ -120,7 +120,7 @@ npm run prebuild
 ## SDK 54 Compatibility Notes
 
 ### Breaking Changes & Upgrades
-- React Native upgraded to 0.85.0 (from 0.81.0)
+- React Native upgraded to 0.81.5 (from 0.76.0)
 - New Architecture (Hermes) is enabled by default
 - All Expo modules have been updated to their latest SDK 54 compatible versions
 
@@ -161,7 +161,7 @@ eas build --platform android --clear-cache
 
 - **v1.0.0**: Initial release with Expo SDK 54 compatibility
   - Updated from SDK 52
-  - React Native 0.85.0
+  - React Native 0.81.5
   - New Architecture (Hermes) enabled
   - All dependencies updated for SDK 54
 

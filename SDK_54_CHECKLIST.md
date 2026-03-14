@@ -4,8 +4,8 @@
 
 ### Core Dependencies
 - [x] Expo SDK 54.0.0
-- [x] React Native 0.85.0
-- [x] React 18.3.1
+- [x] React Native 0.81.5
+- [x] React 19.1.0
 - [x] Hermes JS Engine faollashtirilgan
 
 ### Expo Modullar
@@ -43,7 +43,7 @@
 
 ### package.json
 - [x] Expo 54.0.0 versiyasiga yangilandi
-- [x] React Native 0.85.0 versiyasiga yangilandi
+- [x] React Native 0.81.5 versiyasiga yangilandi
 - [x] Barcha dependency'lar SDK 54 bilan moslashtirildi
 
 ### app.json
@@ -102,7 +102,7 @@
 ## ✅ Performance Optimizations
 
 - [x] Hermes JS engine (faster startup, smaller bundle)
-- [x] React Native 0.85 performance improvements
+- [x] React Native 0.81.5 performance improvements
 - [x] Code splitting with Expo Router
 - [x] Image optimization with expo-image
 - [x] Animation optimization with Reanimated 3

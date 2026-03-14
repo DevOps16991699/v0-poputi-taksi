@@ -1,13 +1,13 @@
 ## Expo SDK 54 bilan to'liq moslashtirilgan React Native/Expo loyihasi
 
-**Poputi Taksi** - Yo'lovchi va haydovchilarni birlashtiruvchi mumtazo ride-sharing ilovasi, Expo SDK 54 va React Native 0.85.0 bilan qurilgan.
+**Poputi Taksi** - Yo'lovchi va haydovchilarni birlashtiruvchi mumtazo ride-sharing ilovasi, Expo SDK 54 va React Native 0.81.5 bilan qurilgan.
 
 ---
 
 ## 🌟 Asosiy Xususiyatlar
 
 - ✅ **Expo SDK 54.0.0** - Oxirgi va eng tezkor SDK versiyasi
-- ✅ **React Native 0.85.0** - Yangilashtirilgan React Native versiyasi
+- ✅ **React Native 0.81.5** - Yangilashtirilgan React Native versiyasi
 - ✅ **Hermes Engine** - Tezroq startup va kichikroq bundle
 - ✅ **Expo Router** - Fayl-asosida marshrutlash
 - ✅ **TypeScript** - To'liq type safety
@@ -95,12 +95,12 @@ poputi-taksi/
 
 ### Core Framework
 - **Expo 54.0.0** - Mobile development platform
-- **React Native 0.85.0** - Cross-platform mobile
-- **React 18.3.1** - UI library
-- **TypeScript 5.3** - Type safety
+- **React Native 0.81.5** - Cross-platform mobile
+- **React 19.1.0** - UI library
+- **TypeScript 5.9.3** - Type safety
 
 ### Navigation & State
-- **Expo Router 4.0.0** - File-based routing
+- **Expo Router 6.0.23** - File-based routing
 - **React Navigation 7.0.0** - Navigation library
 - **Zustand 5.0.0** - Lightweight state management
 
