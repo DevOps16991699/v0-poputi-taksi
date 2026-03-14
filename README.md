@@ -1,3 +1,5 @@
+# 🚕 Poputi Taksi
+
 ## Expo SDK 54 bilan to'liq moslashtirilgan React Native/Expo loyihasi
 
 **Poputi Taksi** - Yo'lovchi va haydovchilarni birlashtiruvchi mumtazo ride-sharing ilovasi, Expo SDK 54 va React Native 0.85.0 bilan qurilgan.
@@ -29,6 +31,39 @@
 - iOS Simulator (Mac) yoki Android Emulator
 - Expo Go app (mobile testing uchun)
 
+### O'rnatish
+
+### ```bash
+# Loyihani klonlash
+git clone https://github.com/DevOps16991699/v0-poputi-taksi.git
+cd v0-poputi-taksi
+
+# Dependency'larni o'rnatish
+npm install
+
+# Expo dev server'ni ishga tushirish
+npm start
+
+# QR-kodini Expo Go orqali skanerlang
+```
+
+### Ishga Tushirish
+
+```bash
+# Expo Go-da ishga tushirish (eng tez)
+npm start
+
+# iOS Simulator'da
+npm run ios
+
+# Android Emulator'da
+npm run android
+
+# Web brauzerda
+npm run web
+```
+
+---
 
 ## 📁 Loyiha Strukturasi
 
