@@ -8,6 +8,7 @@
     "scheme": "poputi",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "jsEngine": "hermes",
     "sdkVersion": "54.0.0",
     "splash": {
       "image": "./assets/splash-icon.png",
